@@ -1144,6 +1144,11 @@ a.btn.btn-outline:hover {
 /* ═══════════════════════════════════════════════════
    SEARCH
    ═══════════════════════════════════════════════════ */
+#search-demo-container {
+  position: relative !important;
+  display: inline-block;
+}
+
 #search-input {
   font-family: var(--font-sans) !important;
   font-size: 13px !important;
@@ -1169,15 +1174,22 @@ a.btn.btn-outline:hover {
 }
 
 ul#results-container {
+  position: absolute !important;
   background: var(--surface) !important;
   border: 1px solid var(--border) !important;
   border-radius: var(--r-md) !important;
   box-shadow: 0 4px 16px rgba(24, 24, 27, 0.1) !important;
-  z-index: 999 !important;
-  top: 44px !important;
-  left: 8px !important;
-  width: 260px !important;
+  z-index: 2000 !important;
+  top: calc(100% + 2px) !important;
+  right: 0 !important;
+  left: auto !important;
+  width: 280px !important;
   font-size: 13px !important;
+  list-style: none !important;
+  padding: 4px 0 !important;
+  margin: 0 !important;
+  max-height: 360px !important;
+  overflow-y: auto !important;
 }
 
 ul#results-container a {
@@ -1186,12 +1198,13 @@ ul#results-container a {
   color: var(--ink-2) !important;
   border-radius: var(--r-sm);
   transition: background 0.1s;
+  text-decoration: none !important;
 }
 
 ul#results-container a:hover {
   background: var(--bg-warm);
   color: var(--ink) !important;
-  text-decoration: none;
+  text-decoration: none !important;
 }
 
 /* ═══════════════════════════════════════════════════
