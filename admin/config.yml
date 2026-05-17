@@ -3,7 +3,7 @@ backend:
   repo: gourab026/gourab026.github.io
   branch: main
   auth_type: pkce
-  app_id: YOUR_CLIENT_ID   # replace this with your OAuth App Client ID
+  app_id: Ov23liPPlWsFKf60To5R
 
 media_folder: images
 public_folder: /images
