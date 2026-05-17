@@ -1,9 +1,6 @@
 backend:
-  name: github
-  repo: gourab026/gourab026.github.io
+  name: git-gateway
   branch: main
-  auth_type: pkce
-  app_id: Ov23liPPlWsFKf60To5R
 
 media_folder: images
 public_folder: /images
@@ -21,11 +18,11 @@ collections:
       - label: Permalink
         name: permalink
         widget: string
-        hint: "Filename without date, e.g. my-post-title.html"
+        hint: "e.g. my-post-title.html — must be unique, becomes the page URL"
       - { label: Published, name: published, widget: boolean, default: true }
       - label: Tags
         name: tags
         widget: list
-        hint: "Comma-separated. Use allowed tags: cybersecurity, home-lab, python, osint, phishing-analysis, malware, ctf, automation, networking, web, tools, risk-management, governance, incident-response, identity, hardening"
+        hint: "cybersecurity, home-lab, python, osint, phishing-analysis, malware, ctf, automation, networking, web, tools, risk-management, governance, incident-response, identity, hardening"
       - { label: Summary,   name: summary,   widget: text,   required: false }
-      - { label: Body,      name: body,       widget: markdown }
+      - { label: Body,      name: body,      widget: markdown }
