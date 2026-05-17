@@ -1,14 +1,9 @@
 ---
 title: Asset & Change management
-author: gourabdg47
-date: 2025-04-16 11:24:00
-categories:
-  - Information
-  - Security +
-tags:
-  - reading
-  - certification
-render_with_liquid: true
+published: true
+permalink: asset-change-management.html
+summary: ""
+tags: [reading, certification]
 ---
 
 ### **Asset Management**

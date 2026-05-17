@@ -1,0 +1,28 @@
+---
+title: Blog Archive
+sidebar: blog_sidebar
+permalink: blog_archive.html
+toc: false
+---
+
+
+{% assign total_posts = site.posts | size %}
+<p><strong>{{ total_posts }}</strong> posts in total.</p>
+
+{% assign posts_by_year = site.posts | group_by_exp: "post", "post.date | date: '%Y'" %}
+{% for year_group in posts_by_year %}
+<div class="archive-year">{{ year_group.name }} <span class="archive-count">({{ year_group.items | size }})</span></div>
+
+{% assign posts_by_month = year_group.items | group_by_exp: "post", "post.date | date: '%B'" %}
+{% for month_group in posts_by_month %}
+<div class="archive-month">{{ month_group.name }}</div>
+
+{% for post in month_group.items %}
+<div class="archive-post">
+    <span class="archive-day">{{ post.date | date: "%d" }}</span>
+    <a class="archive-link" href="{{ post.url | remove: '/' }}">{{ post.title }}</a>
+</div>
+{% endfor %}
+
+{% endfor %}
+{% endfor %}

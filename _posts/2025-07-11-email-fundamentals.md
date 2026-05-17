@@ -1,16 +1,11 @@
 ---
 title: Email fundamentals
-author: gourabdg47
-date: 25-07-11 01:23:00 +0500
-categories:
-  - Breach Detected
-  - SOC-101
-tags:
-  - study
-  - cybersecurity
-  - phishing_analysis
-render_with_liquid: false
+published: true
+permalink: email-fundamentals.html
+summary: ""
+tags: [study, cybersecurity, phishing-analysis]
 ---
+
 ### Email Fundamentals
 
 To effectively analyze phishing attempts, a deep understanding of email fundamentals is absolutely critical. Phishing attacks inherently exploit the underlying mechanisms and trust models of email communication. By dissecting the various components and protocols, an analyst can uncover clues about the attacker's identity, methods, and intent.
@@ -177,7 +172,7 @@ With IMAP, your email client essentially acts as a "window" to your mailbox on t
 - **WHOIS Lookup:** To find information about IP addresses and domain registrations.
 - **URL Scanners:** Services like VirusTotal, URLScan.io, or Google Safe Browse can analyze suspicious URLs for malicious content.
 - **Sandbox Environments:** For safely opening suspicious attachments or visiting malicious links without infecting your own system.
-- **OSINT (Open Source Intelligence):** Searching for attacker email addresses, domain names, or IP addresses online can reveal if they are known malicious entities.
+- **osint (Open Source Intelligence):** Searching for attacker email addresses, domain names, or IP addresses online can reveal if they are known malicious entities.
     
 By meticulously applying these fundamental email principles and analysis techniques, you can significantly enhance your ability to identify, understand, and defend against phishing attacks.
 

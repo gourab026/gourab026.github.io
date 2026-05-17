@@ -1,15 +1,9 @@
 ---
 title: Phishing Attack Techniques
-author: gourabdg47
-date: 25-07-13 20:07:00 +0500
-categories:
-  - Breach Detected
-  - SOC-101
-tags:
-  - study
-  - cybersecurity
-  - phishing_analysis
-render_with_liquid: false
+published: true
+permalink: phishing-attack-techniques.html
+summary: ""
+tags: [study, cybersecurity, phishing-analysis]
 ---
 
 # Phishing Attack Techniques

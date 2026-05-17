@@ -1,15 +1,9 @@
 ---
 title: Start Here !
-author: gourabdg47
-date: 2025-06-01 12:53:00
-categories:
-  - Project
-  - Home-Lab-1
-tags:
-  - writing
-  - project
-  - cybersecurity
-render_with_liquid: true
+published: true
+permalink: home-lab-1-start-here.html
+summary: ""
+tags: [writing, project, cybersecurity]
 ---
 
 ## Cyber Security Virtual Lab

@@ -1,15 +1,11 @@
 ---
 title: Governance & Compliance
-author: gourabdg47
-date: 2025-04-06 18:43
-categories:
-  - Information
-  - Security +
-tags:
-  - reading
-  - certification
-render_with_liquid: true
+published: true
+permalink: governance-compliance.html
+summary: ""
+tags: [reading, certification]
 ---
+
 I am following [Jason Dion's Security+ course on Udemy](https://www.udemy.com/course/securityplus/learn/lecture/40324620#overview) to prepare for the CompTIA Security+ certification.
 
 # Governance & Compliance
@@ -425,7 +421,3 @@ A **playbook** is a predefined, step-by-step guide that outlines how to detect
     • **Acknowledgement:** Employees and partners confirm they understand and will follow compliance policies.
 
 ---
-
-> 💡 **Join the discussion**:  
-> For questions or collaboration opportunities, visit our [ZeroDayMindset Discussion Board](https://github.com/orgs/X3N0-G0D/discussions/1)
-{: .prompt-info }

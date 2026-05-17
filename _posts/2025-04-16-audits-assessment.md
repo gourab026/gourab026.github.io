@@ -1,14 +1,9 @@
 ---
 title: Audit & Assessment
-author: gourabdg47
-date: 2025-04-16 11:24:00
-categories:
-  - Information
-  - Security +
-tags:
-  - reading
-  - certification
-render_with_liquid: true
+published: true
+permalink: audits-assessment.html
+summary: ""
+tags: [reading, certification]
 ---
 
 # Audit & Assessments

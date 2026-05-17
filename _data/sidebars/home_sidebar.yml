@@ -1,24 +1,41 @@
-# This is your sidebar TOC. The sidebar code loops through sections here and provides the appropriate formatting.
+# This is your sidebar TOC for the home pages
 
 entries:
 - title: Sidebar
   levels: one
   folders:
 
-  - title: Products
+  - title: Main
     output: web
     folderitems:
-    - title: News
-      url: /news.html
+    - title: Home
+      url: /index.html
       output: web
-    - title: Theme instructions
-      url: /mydoc_introduction.html
-      output: web
-    - title: Product 1
-      url: /p1_landing_page.html
-      output: web
-    - title: Product 2
-      url: /p2_landing_page.html
+    - title: About
+      url: /about.html
       output: web
 
-# Copyright 2021 Google LLC
+  - title: Portfolio
+    output: web
+    folderitems:
+    - title: Portfolio
+      url: /portfolio.html
+      output: web
+    - title: Projects
+      url: /projects.html
+      output: web
+    - title: In Progress
+      url: /in-progress.html
+      output: web
+
+  - title: Content
+    output: web
+    folderitems:
+    - title: Blog
+      url: /blog.html
+      output: web
+    - title: Blog Archive
+      url: /blog_archive.html
+      output: web
+
+# Copyright 2025 Gourab Das

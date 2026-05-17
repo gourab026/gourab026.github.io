@@ -1,15 +1,11 @@
 ---
 title: NIST Framework
-author: gourabdg47
-date: 2025-03-30T18:05:00
-categories:
-  - Information
-  - Cybersecurity
-tags:
-  - reading
-  - framework
-render_with_liquid: true
+published: true
+permalink: nist-framework.html
+summary: ""
+tags: [reading, framework]
 ---
+
 ## NIST Framework
 National Institute of Standard & Technology
 

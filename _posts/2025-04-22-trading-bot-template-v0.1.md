@@ -1,16 +1,10 @@
 ---
 title: Trading Bot Template v0.1
-author: gourabdg47
-date: 2025-04-22 13:33:00
-categories:
-  - Information
-  - Code
-tags:
-  - coding
-  - python
-render_with_liquid: true
+published: true
+permalink: trading-bot-template-v0-1.html
+summary: ""
+tags: [coding, python]
 ---
-
 
 >Use it at your own risk. I am not responsible for your action in kind or form.
 {: .prompt-warning }

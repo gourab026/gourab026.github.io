@@ -1,14 +1,11 @@
 ---
 title: Obsidian Hotkeys Cheat Sheet (2024)
-author: gourabdg47
-date: 25-04-02 14:11
-categories:
-  - Blogging
-  - Interesting
-tags:
-  - reading
-render_with_liquid: false
+published: true
+permalink: obsidian-hotkeys-cheat-sheet-2024.html
+summary: ""
+tags: [reading]
 ---
+
 ## **🔍 What is Obsidian?**
 
 **Obsidian** is a **privacy-focused, Markdown-based** note-taking and knowledge management app that stores your notes as plain text files in a local folder (your "vault"). Unlike cloud-based tools like Notion or Evernote, Obsidian gives you **full control** over your data with **no vendor lock-in**.

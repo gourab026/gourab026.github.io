@@ -1,16 +1,10 @@
 ---
 title: NeuroFocus Balance Tracker
-author: gourabdg47
-date: 2025-04-20 14:26:00
-categories:
-  - Information
-  - Code
-tags:
-  - coding
-  - python
-render_with_liquid: true
+published: true
+permalink: neurofocus-balance-tracker.html
+summary: ""
+tags: [coding, python]
 ---
-
 
 >Install the dependencies with pip as asked during running the code
 >These are experimental code

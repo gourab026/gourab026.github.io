@@ -1,14 +1,9 @@
 ---
 title: Deconstructing the Phish
-author: gourabdg47
-date: 25-06-16 10:20:00 +0500
-categories:
-  - Information
-  - Cybersecurity
-tags:
-  - reading
-  - cybersecurity
-render_with_liquid: false
+published: true
+permalink: deconstructing-the-phish.html
+summary: ""
+tags: [reading, cybersecurity]
 ---
 
 # Deconstructing the Phish: A Comprehensive Technical Report on Email-Based Threat Vectors, Analysis, and Defense-in-Depth
@@ -283,7 +278,7 @@ This is the intelligence-gathering phase where the attacker identifies targets a
 
 - **For Mass Phishing:** Reconnaissance can be as simple as purchasing massive email lists from data breach compilations or darknet vendors.4
     
-- **For Spear Phishing and Whaling:** This stage is far more intensive. Attackers use Open-Source Intelligence (OSINT) techniques, meticulously scouring public sources for information.41 They analyze company websites to understand organizational structure, identify key personnel in finance or IT, and learn the names of executives. They then pivot to social media platforms like LinkedIn to map professional relationships, find job titles, and gather personal details that can be used to build trust and add legitimacy to the lure.26 This detailed information is the raw material for a highly convincing, personalized attack.
+- **For Spear Phishing and Whaling:** This stage is far more intensive. Attackers use Open-Source Intelligence (osint) techniques, meticulously scouring public sources for information.41 They analyze company websites to understand organizational structure, identify key personnel in finance or IT, and learn the names of executives. They then pivot to social media platforms like LinkedIn to map professional relationships, find job titles, and gather personal details that can be used to build trust and add legitimacy to the lure.26 This detailed information is the raw material for a highly convincing, personalized attack.
     
 
 #### 6.2 Stage 2: Weaponization

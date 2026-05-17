@@ -1,15 +1,11 @@
 ---
 title: Mind Map of Security+ | Study Guide
-author: gourabdg47
-date: 2025-04-07 13:43
-categories:
-  - Information
-  - Security +
-tags:
-  - reading
-  - certification
-render_with_liquid: true
+published: true
+permalink: mind-map-security.html
+summary: ""
+tags: [reading, certification]
 ---
+
 # Security+ Study Guide Mind Map
 
 ## Cybersecurity Fundamentals
@@ -198,7 +194,3 @@ render_with_liquid: true
 
 
 ---
-
-> 💡 **Join the discussion**:  
-> For questions or collaboration opportunities, visit our [ZeroDayMindset Discussion Board](https://github.com/orgs/X3N0-G0D/discussions/1)
-{: .prompt-info }

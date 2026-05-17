@@ -39,31 +39,23 @@ layout: default
     {% endunless %}
 
 
-    {% if site.github_editme_path %}
-
-    <a target="_blank" rel="noopener" href="https://github.com/{{site.github_editme_path}}{{page.path}}" class="btn btn-default githubEditButton" role="button"><i class="fa fa-github fa-lg"></i> Edit me</a>
-
-    {% endif %}
-
    {{content}}
 
+    {% assign projectTags = site.data.tags.allowed-tags %}
+    {% assign matchedTags = "" %}
+    {% for tag in page.tags %}{% if projectTags contains tag %}{% assign matchedTags = matchedTags | append: tag %}{% endif %}{% endfor %}
+    {% if matchedTags != "" %}
     <div class="tags">
-        {% if page.tags != null %}
         <b>Tags: </b>
-        {% assign projectTags = site.data.tags.allowed-tags %}
         {% for tag in page.tags %}
         {% if projectTags contains tag %}
-        <a href="{{ "tag_" | append: tag | append: ".html" }}" class="btn btn-default navbar-btn cursorNorm" role="button">{{page.tagName}}{{tag}}</a>
+        <a href="{{ "tag_" | append: tag | append: ".html" }}" class="btn btn-default navbar-btn cursorNorm" role="button">{{tag}}</a>
         {% endif %}
         {% endfor %}
-        {% endif %}
     </div>
-
-{% include commento.html %}
+    {% endif %}
 
 </div>
-
-{{site.data.alerts.hr_shaded}}
 
 {% include footer.html %}
 

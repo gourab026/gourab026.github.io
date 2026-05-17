@@ -1,21 +1,15 @@
 ---
-title: Hacktoria CTF - Cold War Enemies
-author: gourabdg47
-date: 25-06-30 01:23:00 +0500
-categories:
-  - Cybersecurity
-  - CTF
-tags:
-  - cybersecurity
-  - CTF
-  - OSINT
-render_with_liquid: false
+title: Hacktoria ctf - Cold War Enemies
+published: true
+permalink: unpublished-hacktoria-ctf.html
+summary: ""
+tags: [cybersecurity, ctf, osint]
 ---
 
 # Cold War Enemies
-**CTF LINK : [hacktoria.com](https://hacktoria.com/#easy)**
+**ctf LINK : [hacktoria.com](https://hacktoria.com/#easy)**
 
-These are OSINT CTFs based on these ingredients :
+These are osint CTFs based on these ingredients :
 🌎 – Geolocation  
 🔎 – Forensics  
 🥸 – People  

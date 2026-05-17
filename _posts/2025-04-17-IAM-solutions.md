@@ -1,14 +1,9 @@
 ---
 title: Identity and Access Management (IAM) Solutions
-author: gourabdg47
-date: 2025-04-17 07:30:00
-categories:
-  - Information
-  - Security +
-tags:
-  - reading
-  - certification
-render_with_liquid: true
+published: true
+permalink: iam-solutions.html
+summary: ""
+tags: [reading, certification]
 ---
 
 # Identity and Access Management (IAM) Solutions

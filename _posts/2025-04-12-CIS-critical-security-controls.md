@@ -1,14 +1,9 @@
 ---
 title: " CIS Critical Security Controls"
-author: gourabdg47
-date: 2025-04-12 18:08
-categories:
-  - Information
-  - Cybersecurity
-tags:
-  - reading
-  - framework
-render_with_liquid: true
+published: true
+permalink: cis-critical-security-controls.html
+summary: ""
+tags: [reading, framework]
 ---
 
 ## What is CIS Critical Security Controls
@@ -84,7 +79,3 @@ For full details, refer to the [CIS Controls v8.1 documentation](https://www.ci
 
 
 ---
-
-> 💡 **Join the discussion**:  
-> For questions or collaboration opportunities, visit our [ZeroDayMindset Discussion Board](https://github.com/orgs/X3N0-G0D/discussions/1)
-{: .prompt-info }

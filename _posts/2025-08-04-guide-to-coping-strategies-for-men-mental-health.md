@@ -1,15 +1,10 @@
 ---
 title: Guide to Coping Strategies for Men's Mental Health
-author: gourabdg47
-date: 25-08-04 02:00:00 +0500
-categories:
-  - Blogging
-  - Interesting
-tags:
-  - reading
-render_with_liquid: false
+published: true
+permalink: guide-to-coping-strategies-for-men-mental-health.html
+summary: ""
+tags: [reading]
 ---
-
 
 > This was created using Deep Research based on Key points 
 {: .prompt-info }

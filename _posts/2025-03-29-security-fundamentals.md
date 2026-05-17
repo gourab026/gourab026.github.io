@@ -1,15 +1,11 @@
 ---
 title: Security Fundamentals
-author: gourabdg47
-date: 2025-03-29T19:33:00
-categories:
-  - Information
-  - Security +
-tags:
-  - reading
-  - certification
-render_with_liquid: true
+published: true
+permalink: security-fundamentals.html
+summary: ""
+tags: [reading, certification]
 ---
+
 I am following [Udemy Jason Dion](https://www.udemy.com/course/securityplus/learn/lecture/40324620#overview)'s course for Security +
 
 ## Fundamentals of Security

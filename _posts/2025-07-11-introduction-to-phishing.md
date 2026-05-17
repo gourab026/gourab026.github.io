@@ -1,16 +1,11 @@
 ---
 title: Introduction to Phishing
-author: gourabdg47
-date: 25-07-11 01:23:00 +0500
-categories:
-  - Breach Detected
-  - SOC-101
-tags:
-  - study
-  - cybersecurity
-  - phishing_analysis
-render_with_liquid: false
+published: true
+permalink: introduction-to-phishing.html
+summary: ""
+tags: [study, cybersecurity, phishing-analysis]
 ---
+
 ### Introduction to Phishing
 
 #### Phishing 

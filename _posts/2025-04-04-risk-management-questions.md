@@ -1,15 +1,11 @@
 ---
 title: Risk Management Q/A
-author: gourabdg47
-date: 2025-04-04 19:03
-categories:
-  - Information
-  - Security +
-tags:
-  - reading
-  - certification
-render_with_liquid: true
+published: true
+permalink: risk-management-questions.html
+summary: ""
+tags: [reading, certification]
 ---
+
 # Risk Management Q/A
 
 - **A company identifies a vulnerability that could result in a potential loss of $10,000. However, the cost of mitigation is estimated at $15,000. Which risk response is most appropriate?**  
@@ -976,9 +972,3 @@ render_with_liquid: true
 
 > Used ChatGPT 
 {: .prompt-info}
-
-
-
-> 💡 **Join the discussion**:  
-> For questions or collaboration opportunities, visit our [ZeroDayMindset Discussion Board](https://github.com/orgs/X3N0-G0D/discussions/1)
-{: .prompt-info }

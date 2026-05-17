@@ -1,15 +1,11 @@
 ---
 title: Data Protection
-author: gourabdg47
-date: 2025-04-04 15:17
-categories:
-  - Information
-  - Security +
-tags:
-  - reading
-  - certification
-render_with_liquid: true
+published: true
+permalink: data-protection.html
+summary: ""
+tags: [reading, certification]
 ---
+
 I am following [Jason Dion's Security+ course on Udemy](https://www.udemy.com/course/securityplus/learn/lecture/40324620#overview) to prepare for the CompTIA Security+ certification.
 
 ## Data Protection
@@ -102,7 +98,3 @@ Strategies to prevent sensitive data exfiltration:
 - **Cloud DLP**: SaaS-based protection
 
 ---
-
-> 💡 **Join the discussion**:  
-> For questions or collaboration opportunities, visit our [ZeroDayMindset Discussion Board](https://github.com/orgs/X3N0-G0D/discussions/1)
-{: .prompt-info }

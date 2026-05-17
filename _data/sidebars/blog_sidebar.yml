@@ -1,0 +1,74 @@
+# Sidebar for Blog pages
+
+entries:
+- title: Sidebar
+  levels: one
+  folders:
+
+  - title: Blog Navigation
+    output: web
+    folderitems:
+    - title: All Posts
+      url: /blog.html
+      output: web
+    - title: Blog Archive
+      url: /blog_archive.html
+      output: web
+    - title: Subscribe
+      url: /feed.xml
+      output: web
+
+  - title: Categories
+    output: web
+    folderitems:
+    - title: Certification
+      url: /tag_certification.html
+      output: web
+    - title: Coding
+      url: /tag_coding.html
+      output: web
+    - title: Cybersecurity
+      url: /tag_cybersecurity.html
+      output: web
+    - title: Reading
+      url: /tag_reading.html
+      output: web
+    - title: Writing
+      url: /tag_writing.html
+      output: web
+    - title: Project
+      url: /tag_project.html
+      output: web
+    - title: Study
+      url: /tag_study.html
+      output: web
+    - title: Framework
+      url: /tag_framework.html
+      output: web
+    - title: Python
+      url: /tag_python.html
+      output: web
+    - title: Curiosity
+      url: /tag_curiosity.html
+      output: web
+
+  - title: Topics
+    output: web
+    folderitems:
+    - title: Phishing Analysis
+      url: /tag_phishing-analysis.html
+      output: web
+    - title: Case Study
+      url: /tag_case-study.html
+      output: web
+    - title: Networking
+      url: /tag_networking.html
+      output: web
+    - title: OSINT
+      url: /tag_osint.html
+      output: web
+    - title: CTF
+      url: /tag_ctf.html
+      output: web
+
+# Copyright 2021 Google LLC

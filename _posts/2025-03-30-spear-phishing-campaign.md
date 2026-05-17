@@ -1,15 +1,11 @@
 ---
 title: Phishing Campaign - Operation Solaris
-author: gourabdg47
-date: 2025-04-01 07:48
-categories:
-  - Information
-  - Security +
-tags:
-  - reading
-  - case-study
-render_with_liquid: true
+published: true
+permalink: spear-phishing-campaign.html
+summary: ""
+tags: [reading, case-study]
 ---
+
 # The Silent Heist: Anatomy of a Hypothetical Spear Phishing Campaign  
 
 ---
@@ -34,7 +30,7 @@ Spear phishing is a **hyper-targeted cyberattack** where threat actors craft per
 ---
 
 ### Phase 1: Reconnaissance (The Hunt)  
-- **OSINT (Open-Source Intelligence)**:  
+- **osint (Open-Source Intelligence)**:  
   - Attackers scrape LinkedIn to identify Solaris’s CFO, R&D Director, and their project codename ("Project Helios").  
   - Study press releases about Solaris’s partnership with "EcoLaw Partners," a legal firm advising on patents.  
 - **Domain Spoofing**:  

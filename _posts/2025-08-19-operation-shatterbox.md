@@ -1,19 +1,12 @@
 ---
 title: Operation Shatterbox
-author: gourabdg47
-date: 2025-08-19 02:53:00
-categories:
-  - Project
-  - CTF
-tags:
-  - writing
-  - project
-  - cybersecurity
-render_with_liquid: true
+published: true
+permalink: operation-shatterbox.html
+summary: ""
+tags: [writing, project, cybersecurity]
 ---
 
-
-# Metasploitable3 CTF: Operation Shatterbox
+# Metasploitable3 ctf: Operation Shatterbox
 
 MISSION BRIEFING:
 

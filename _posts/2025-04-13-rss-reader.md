@@ -1,16 +1,10 @@
 ---
 title: RSS Reader
-author: gourabdg47
-date: 2025-04-13 00:26:00
-categories:
-  - Information
-  - Code
-tags:
-  - coding
-  - python
-render_with_liquid: true
+published: true
+permalink: rss-reader.html
+summary: ""
+tags: [coding, python]
 ---
-
 
   **CODE** : [RSS READER GUI](https://raw.githubusercontent.com/gourabdg47/gourabdg47.github.io/refs/heads/main/assets/code/rss_reader.py)
 

@@ -1,17 +1,11 @@
 ---
 title: Revision Topics
-author: gourabdg47
-date: 2025-04-10 18:32
-categories:
-  - Information
-  - Security +
-tags:
-  - reading
-  - certification
-  - imp
-render_with_liquid: true
-pin: "false"
+published: true
+permalink: revision-topics.html
+summary: ""
+tags: [reading, certification, imp]
 ---
+
 # **Revision Topics** 
 
 So here's what happening, I doubt that I will pass the exam (CompTIA Security+). There are so many topics, I am getting confused. I will pickup some topics I think I am weak at and study them from different sources. 
@@ -279,7 +273,3 @@ Allows a response packet only if it matches a previously initiated and allowed c
 So much is there, the thing is its not tough just that so much information ... I do love this subject and all the information ... But since I am changing my career at so late age, i believe that getting this cert might confirm my entry into cyber security field. Maybe its just a false hope, maybe it's the right step ... Time will answer the questions  !!!
 
 ---
-
-> 💡 **Join the discussion**:  
-> For questions or collaboration opportunities, visit our [ZeroDayMindset Discussion Board](https://github.com/orgs/X3N0-G0D/discussions/1)
-{: .prompt-info }

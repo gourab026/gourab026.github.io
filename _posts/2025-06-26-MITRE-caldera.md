@@ -1,15 +1,11 @@
 ---
 title: MITRE Caldera
-author: gourabdg47
-date: 2025-06-26 02:20:00 +0500
-categories:
-  - Information
-  - Cybersecurity
-tags:
-  - reading
-  - cybersecurity
-render_with_liquid: false
+published: true
+permalink: mitre-caldera.html
+summary: ""
+tags: [reading, cybersecurity]
 ---
+
 # MITRE Caldera: An Advanced Platform for Threat-Informed Cybersecurity Emulation
 
 ## Executive Summary

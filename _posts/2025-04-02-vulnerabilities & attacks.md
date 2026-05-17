@@ -1,15 +1,11 @@
 ---
 title: Vulnerabilities & Attacks
-author: gourabdg47
-date: 2025-04-02 09:05:00
-categories:
-  - Information
-  - Security +
-tags:
-  - reading
-  - certification
-render_with_liquid: true
+published: true
+permalink: vulnerabilities-attacks.html
+summary: ""
+tags: [reading, certification]
 ---
+
 I am following [Udemy Jason Dion](https://www.udemy.com/course/securityplus/learn/lecture/40324620#overview)'s course for Security +
 
 ## **Vulnerabilities & Attacks**

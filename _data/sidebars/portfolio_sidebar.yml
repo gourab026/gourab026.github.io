@@ -1,0 +1,34 @@
+# Sidebar for Portfolio pages
+
+entries:
+- title: Sidebar
+  levels: one
+  folders:
+
+  - title: Portfolio Navigation
+    output: web
+    folderitems:
+    - title: Portfolio Overview
+      url: /portfolio.html
+      output: web
+    - title: All Projects
+      url: /projects.html
+      output: web
+    - title: In Progress
+      url: /in-progress.html
+      output: web
+
+  - title: Project Categories
+    output: web
+    folderitems:
+    - title: Cybersecurity
+      url: /tag_cybersecurity.html
+      output: web
+    - title: Development
+      url: /tag_coding.html
+      output: web
+    - title: Home Lab
+      url: /tag_project.html
+      output: web
+
+# Copyright 2025 Gourab Das

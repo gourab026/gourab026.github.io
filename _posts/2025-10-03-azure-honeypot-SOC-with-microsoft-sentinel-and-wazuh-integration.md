@@ -1,17 +1,10 @@
 ---
 title: Azure Honeypot SOC with Microsoft Sentinel and Wazuh Integration
-author: gourabdg47
-date: 2025-10-03 11:52:00
-categories:
-  - Project
-  - Home-Lab-2
-tags:
-  - writing
-  - project
-  - cybersecurity
-render_with_liquid: true
+published: true
+permalink: azure-honeypot-soc-with-microsoft-sentinel-and-wazuh-integration.html
+summary: ""
+tags: [writing, project, cybersecurity]
 ---
-
 
 Of course\! Here is your blog post converted into proper Markdown format, ready for publishing.
 

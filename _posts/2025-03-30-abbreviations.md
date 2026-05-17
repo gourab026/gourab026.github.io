@@ -1,16 +1,10 @@
 ---
 title: Abbreviations
-author: gourabdg47
-date: 2025-04-02 09:58:00
-categories:
-  - Information
-  - Security +
-tags:
-  - reading
-  - certification
-render_with_liquid: true
+published: true
+permalink: abbreviations.html
+summary: ""
+tags: [reading, certification]
 ---
-
 
 ## **Abbreviations**
 
@@ -194,7 +188,7 @@ render_with_liquid: true
 | **OCSP**       | Online Certificate Status Protocol                                                           | Real-time cert revocation checks            |                                                          |
 | **OID**        | Object Identifier                                                                            | Unique identifier in PKI                    |                                                          |
 | **OS**         | Operating System                                                                             | Windows, Linux, macOS security              |                                                          |
-| **OSINT**      | Open-source Intelligence                                                                     | Threat intelligence from public sources     |                                                          |
+| **osint**      | Open-source Intelligence                                                                     | Threat intelligence from public sources     |                                                          |
 | **OSPF**       | Open Shortest Path First                                                                     | Dynamic routing protocol                    |                                                          |
 | **OT**         | Operational Technology                                                                       | Industrial systems (SCADA, ICS)             |                                                          |
 | **OTA**        | Over the Air                                                                                 | Wireless updates (e.g., IoT devices)        |                                                          |

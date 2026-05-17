@@ -1,15 +1,9 @@
 ---
 title: My Static Pages (Projects)
-author: gourabdg47
-date: 2025-05-29 08:08:00
-categories:
-  - Information
-  - Code
-tags:
-  - writing
-  - project
-render_with_liquid: true
-pin: "true"
+published: true
+permalink: my-static-pages.html
+summary: ""
+tags: [writing, project]
 ---
 
 #### My Static Project

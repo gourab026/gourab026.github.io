@@ -1,16 +1,10 @@
 ---
 title: Polymorphic Code
-author: gourabdg47
-date: 2025-05-03 00:26:00
-categories:
-  - Information
-  - Code
-tags:
-  - coding
-  - python
-render_with_liquid: true
+published: true
+permalink: polymorphic-code.html
+summary: ""
+tags: [coding, python]
 ---
-
 
 #### Sample polymorphic code
 

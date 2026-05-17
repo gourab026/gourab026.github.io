@@ -1,16 +1,11 @@
 ---
 title: Phishing Attack Types
-author: gourabdg47
-date: 25-07-13 01:07:00 +0500
-categories:
-  - Breach Detected
-  - SOC-101
-tags:
-  - study
-  - cybersecurity
-  - phishing_analysis
-render_with_liquid: false
+published: true
+permalink: phishing-attack-types.html
+summary: ""
+tags: [study, cybersecurity, phishing-analysis]
 ---
+
 # Understanding Phishing Attack Types: A Comprehensive Guide
 
 Phishing is a pervasive cyber threat that relies on deception to trick individuals into revealing sensitive information or taking actions that compromise their security. While often associated with fake login pages, phishing encompasses a variety of tactics, each with a distinct objective. This blog post breaks down some of the most common types of phishing attacks.

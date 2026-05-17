@@ -1,15 +1,11 @@
 ---
 title: Social Engineering
-author: gourabdg47
-date: 2025-04-01 07:48
-categories:
-  - Information
-  - Security +
-tags:
-  - reading
-  - certification
-render_with_liquid: true
+published: true
+permalink: social-engineering.html
+summary: ""
+tags: [reading, certification]
 ---
+
 I am following [Udemy Jason Dion](https://www.udemy.com/course/securityplus/learn/lecture/40324620#overview)'s course for Security +
 
 ## Social Engineering  

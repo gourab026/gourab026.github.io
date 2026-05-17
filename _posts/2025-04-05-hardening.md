@@ -1,15 +1,11 @@
 ---
 title: Hardening
-author: gourabdg47
-date: 2025-04-05 05:44
-categories:
-  - Information
-  - Security +
-tags:
-  - reading
-  - certification
-render_with_liquid: true
+published: true
+permalink: hardening.html
+summary: ""
+tags: [reading, certification]
 ---
+
 I am following [Jason Dion's Security+ course on Udemy](https://www.udemy.com/course/securityplus/learn/lecture/40324620#overview) to prepare for the CompTIA Security+ certification.
 
 # **Hardening**
@@ -163,8 +159,3 @@ A company may adopt the Center for Internet Security (CIS) benchmarks as its sec
 Hardening is a multi-layered approach to security that requires attention to detail across various domains—from system configurations to encryption practices. By understanding and implementing these hardening measures, you can significantly reduce vulnerabilities and bolster your defense against cyber threats.
 
 ---
-
-
-> 💡 **Join the discussion**:  
-> For questions or collaboration opportunities, visit our [ZeroDayMindset Discussion Board](https://github.com/orgs/X3N0-G0D/discussions/1)
-{: .prompt-info }

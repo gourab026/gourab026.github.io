@@ -1,14 +1,9 @@
 ---
 title: Application Security
-author: gourabdg47
-date: 2025-04-09 09:05:00
-categories:
-  - Information
-  - Security +
-tags:
-  - reading
-  - certification
-render_with_liquid: true
+published: true
+permalink: application-security.html
+summary: ""
+tags: [reading, certification]
 ---
 
 # Application  security

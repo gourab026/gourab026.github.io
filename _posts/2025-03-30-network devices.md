@@ -1,15 +1,11 @@
 ---
 title: Common Network Devices
-author: gourabdg47
-date: 2025-03-30T18:05:00
-categories:
-  - Information
-  - Cybersecurity
-tags:
-  - reading
-  - networking
-render_with_liquid: true
+published: true
+permalink: network-devices.html
+summary: ""
+tags: [reading, networking]
 ---
+
 ## What are network devices ?
 Network device are hardware devices that allows computers to talk to each other over a network, LAN (Local Area Network) or WAN (Wide Area Network).
 

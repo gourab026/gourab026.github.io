@@ -3,39 +3,34 @@ layout: default
 ---
 <article class="post" itemscope itemtype="https://schema.org/BlogPosting">
 
-    <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">{{ page.title }}</h1>
-        <p class="post-meta"><time datetime="{{ page.date | date_to_xmlschema }}" itemprop="datePublished">{{ page.date | date: "%b %-d, %Y" }}</time> {% if page.author %}<span itemprop="author" itemscope itemtype="https://schema.org/Person"><span itemprop="name">/ {{ page.author }}</span></span>{% endif %}{% if page.tags != null %}/
-            {% assign projectTags = site.data.tags.allowed-tags %}
-            {% for tag in page.tags %}
-            {% if projectTags contains tag %}
-            <a href="{{ "tag_" | append: tag | append: ".html"}}">{{tag}}</a>{% unless forloop.last %}, {% endunless%}
-            {% endif %}
-            {% endfor %}
-            {% endif %}
+  <header class="post-header">
+    <p class="post-back"><a href="blog.html" class="noCrossRef">← All posts</a></p>
+    <h1 class="post-title" itemprop="name headline">{{ page.title }}</h1>
+    <p class="post-meta">
+      <time datetime="{{ page.date | date_to_xmlschema }}" itemprop="datePublished">{{ page.date | date: "%B %-d, %Y" }}</time>
+      {% if page.tags != null %}
+      {% assign projectTags = site.data.tags.allowed-tags %}
+      {% for tag in page.tags %}
+      {% if projectTags contains tag %}
+      &nbsp;<a href="{{ "tag_" | append: tag | append: ".html" }}" class="post-meta-tag noCrossRef">{{ tag }}</a>
+      {% endif %}
+      {% endfor %}
+      {% endif %}
+    </p>
+  </header>
 
-        </p>
+  <div class="post-content" itemprop="articleBody">
+    {% if page.summary %}
+    <div class="summary">{{ page.summary }}</div>
+    {% endif %}
 
+    {{ content }}
+  </div>
 
-    </header>
-
-    <div class="post-content" itemprop="articleBody">
-
-        {% if page.summary %}
-        <div class="summary">{{page.summary}}</div>
-        {% endif %}
-
-        {{ content }}
-    </div>
-
-
+  <div class="post-footer-nav">
+    <a href="blog.html" class="noCrossRef">← Back to all posts</a>
+  </div>
 
 </article>
 
-{% include commento.html %}
-
-{{site.data.alerts.hr_shaded}}
-
 {% include footer.html %}
-
-{% comment %} Copyright 2021 Google LLC {% endcomment %}

@@ -1,14 +1,9 @@
 ---
 title: Cyber Threat Intelligence
-author: gourabdg47
-date: 25-06-04 02:00:00 +0500
-categories:
-  - Information
-  - Cybersecurity
-tags:
-  - reading
-  - cybersecurity
-render_with_liquid: false
+published: true
+permalink: cyber-threat-intelligence.html
+summary: ""
+tags: [reading, cybersecurity]
 ---
 
 ## Cyber Threat Intelligence

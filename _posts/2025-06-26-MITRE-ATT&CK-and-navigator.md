@@ -1,15 +1,11 @@
 ---
 title: MITRE ATT&CK and Navigator
-author: gourabdg47
-date: 2025-06-26 02:20:00 +0500
-categories:
-  - Information
-  - Cybersecurity
-tags:
-  - reading
-  - cybersecurity
-render_with_liquid: false
+published: true
+permalink: mitre-att-ck-and-navigator.html
+summary: ""
+tags: [reading, cybersecurity]
 ---
+
 # MITRE ATT&CK and Navigator: A Comprehensive Guide for Cyber Threat Research
 
 ## Executive Summary

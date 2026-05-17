@@ -1,15 +1,11 @@
 ---
 title: Python program that scans your computer and lists all folders with size over 5 GB
-author: gourabdg47
-date: 2025-04-09 13:53:00
-categories:
-  - Information
-  - Code
-tags:
-  - coding
-  - python
-render_with_liquid: true
+published: true
+permalink: python-program-lists-folders-size-5-gb.html
+summary: ""
+tags: [coding, python]
 ---
+
   
 >I created it for my own use.
 {: .prompt-info }

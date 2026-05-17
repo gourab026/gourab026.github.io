@@ -1,15 +1,11 @@
 ---
 title: Third Party Vendor Risk
-author: gourabdg47
-date: 2025-04-05 13:43
-categories:
-  - Information
-  - Security +
-tags:
-  - reading
-  - certification
-render_with_liquid: true
+published: true
+permalink: third-party-vendor-risk.html
+summary: ""
+tags: [reading, certification]
 ---
+
 I am following [Jason Dion's Security+ course on Udemy](https://www.udemy.com/course/securityplus/learn/lecture/40324620#overview) to prepare for the CompTIA Security+ certification.
 
 ## Third Party Vendor Risk
@@ -150,7 +146,3 @@ Mechanisms to ensure vendors align with organizational needs and standards:
     _Case Study_: Two entrepreneurs launch a café with a BPA allocating 60/40 profits and managerial duties.
 
 ---
-
-> 💡 **Join the discussion**:  
-> For questions or collaboration opportunities, visit our [ZeroDayMindset Discussion Board](https://github.com/orgs/X3N0-G0D/discussions/1)
-{: .prompt-info }
