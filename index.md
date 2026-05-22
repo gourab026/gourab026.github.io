@@ -21,30 +21,42 @@ toc: false
 
 <h2>Featured Work</h2>
 
-<div class="featured-grid">
+<div class="featured-list">
 
-<a href="tag_cybersecurity.html" class="featured-card">
-<h3><i class="fa fa-shield card-icon" aria-hidden="true"></i> Cybersecurity</h3>
-<p>Vulnerability assessment, threat analysis, incident response, and security architecture write-ups.</p>
-<span class="featured-link">Browse posts →</span>
+<a href="tag_cybersecurity.html" class="featured-item">
+<div class="featured-item-icon"><i class="fa fa-shield" aria-hidden="true"></i></div>
+<div class="featured-item-body">
+<div class="featured-item-title">Cybersecurity</div>
+<div class="featured-item-desc">Vulnerability assessment, threat analysis, incident response, and security architecture write-ups.</div>
+</div>
+<span class="featured-item-arrow">Browse posts →</span>
 </a>
 
-<a href="home-lab-1-start-here.html" class="featured-card">
-<h3><i class="fa fa-server card-icon" aria-hidden="true"></i> Home Lab</h3>
-<p>Building a personal SOC from scratch — SIEM, IDS, threat detection, Splunk, Wazuh, and OpenCTI.</p>
-<span class="featured-link">Start the series →</span>
+<a href="home-lab-1-start-here.html" class="featured-item">
+<div class="featured-item-icon"><i class="fa fa-server" aria-hidden="true"></i></div>
+<div class="featured-item-body">
+<div class="featured-item-title">Home Lab</div>
+<div class="featured-item-desc">Building a personal SOC from scratch — SIEM, IDS, threat detection, Splunk, Wazuh, and OpenCTI.</div>
+</div>
+<span class="featured-item-arrow">Start the series →</span>
 </a>
 
-<a href="tag_python.html" class="featured-card">
-<h3><i class="fa fa-code card-icon" aria-hidden="true"></i> Development</h3>
-<p>Python security tools, automation scripts, and small projects that scratch real itches.</p>
-<span class="featured-link">Browse posts →</span>
+<a href="tag_python.html" class="featured-item">
+<div class="featured-item-icon"><i class="fa fa-code" aria-hidden="true"></i></div>
+<div class="featured-item-body">
+<div class="featured-item-title">Development</div>
+<div class="featured-item-desc">Python security tools, automation scripts, and small projects that scratch real itches.</div>
+</div>
+<span class="featured-item-arrow">Browse posts →</span>
 </a>
 
-<a href="projects.html" class="featured-card">
-<h3><i class="fa fa-rocket card-icon" aria-hidden="true"></i> Projects</h3>
-<p>Completed builds and documented experiments — from desktop AI companions to static web tooling.</p>
-<span class="featured-link">View projects →</span>
+<a href="projects.html" class="featured-item">
+<div class="featured-item-icon"><i class="fa fa-rocket" aria-hidden="true"></i></div>
+<div class="featured-item-body">
+<div class="featured-item-title">Projects</div>
+<div class="featured-item-desc">Completed builds and documented experiments — from desktop AI companions to static web tooling.</div>
+</div>
+<span class="featured-item-arrow">View projects →</span>
 </a>
 
 </div>
