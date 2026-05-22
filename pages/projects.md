@@ -85,6 +85,18 @@ Work in progress, completed builds, and documented experiments. Each entry links
 </div>
 </div>
 
+<div class="project-item">
+<div class="project-title"><a href="https://github.com/gourab026/claude_companion" class="project-link" target="_blank" rel="noopener">Pip — AI Desktop Companion</a></div>
+<img src="images/pip-demo.gif" alt="Pip demo" style="max-width:100%;border-radius:6px;margin:0.5rem 0 0.75rem;">
+<p class="project-desc">A tiny pixel-art character who lives in the corner of your Linux desktop. She chats, dances to your music, reminds you to drink water, and grows a real personality the longer you hang around. Powered by Claude Code — no API key needed.</p>
+<div class="project-meta">
+<span class="project-tag">Python</span>
+<span class="project-tag">PyQt6</span>
+<span class="project-tag">Claude Code</span>
+<span class="project-tag">Desktop App</span>
+</div>
+</div>
+
 </div>
 
 **[← Portfolio Overview](portfolio.html)** &nbsp;·&nbsp; **[In Progress →](in-progress.html)**
