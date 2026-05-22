@@ -2,9 +2,9 @@ repository: gourab026/gourab026.github.io
 
 output: web
 
-topnav_title: Gourab Das
-site_title: Gourab Das - Portfolio & Blog
-company_name: Gourab Das
+topnav_title: Gourab Dasgupta
+site_title: Gourab Dasgupta - Portfolio & Blog
+company_name: Gourab Dasgupta
 
 github_editme_path: gourab026/gourab026.github.io/blob/main/
 
@@ -67,4 +67,4 @@ sidebars:
   - blog_sidebar
   - portfolio_sidebar
 
-description: "Gourab Das - Cybersecurity professional, developer, and technical writer. Portfolio of projects, blog posts, and work in progress."
+description: "Gourab Dasgupta - Cybersecurity professional, developer, and technical writer. Portfolio of projects, blog posts, and work in progress."

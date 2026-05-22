@@ -6,13 +6,14 @@ toc: false
 ---
 
 <div class="hero">
-<h1>Gourab Das</h1>
+<h1>Gourab Dasgupta</h1>
 <p class="subtitle">Cybersecurity &nbsp;·&nbsp; Security Research &nbsp;·&nbsp; Development</p>
-<p>Security professional documenting the journey — home labs, threat intel, CTF write-ups, tooling, and the occasional rabbit hole. Based in the trenches, learning in public.</p>
+<p>Security professional documenting the journey — home labs, threat intel, CTF write-ups, and tooling. Learning in public.</p>
 
 <div class="cta-buttons">
 <a href="portfolio.html" class="btn">View Portfolio</a>
 <a href="blog.html" class="btn btn-outline">Read the Blog</a>
+<a href="projects.html" class="btn btn-outline">Projects</a>
 </div>
 </div>
 
@@ -38,6 +39,12 @@ toc: false
 <h3><i class="fa fa-code card-icon" aria-hidden="true"></i> Development</h3>
 <p>Python security tools, automation scripts, and small projects that scratch real itches.</p>
 <span class="featured-link">Browse posts →</span>
+</a>
+
+<a href="projects.html" class="featured-card">
+<h3><i class="fa fa-rocket card-icon" aria-hidden="true"></i> Projects</h3>
+<p>Completed builds and documented experiments — from desktop AI companions to static web tooling.</p>
+<span class="featured-link">View projects →</span>
 </a>
 
 </div>

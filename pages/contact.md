@@ -1,14 +1,14 @@
 ---
 title: About
 sidebar: home_sidebar
-keywords: about, contact, Gourab Das
+keywords: about, contact, Gourab Dasgupta
 permalink: about.html
 folder: pages
 ---
 
 ## About Me
 
-I'm **Gourab Das**, a cybersecurity professional and developer with a focus on security research, threat analysis, and building tools that solve real problems.
+I'm **Gourab Dasgupta**, a cybersecurity professional and developer with a focus on security research, threat analysis, and building tools that solve real problems.
 
 I hold **CompTIA Security+** and am currently pursuing **OSCP**. My work spans penetration testing, vulnerability assessment, network security, incident response, and OSINT — with a lot of hands-on lab time backing it up.
 
