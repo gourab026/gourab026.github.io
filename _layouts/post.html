@@ -20,8 +20,10 @@ layout: default
   </header>
 
   <div class="post-content" itemprop="articleBody">
-    {% if page.summary %}
+    {% if page.summary and page.summary != "" %}
     <div class="summary">{{ page.summary }}</div>
+    {% else %}
+    <hr class="post-divider">
     {% endif %}
 
     {{ content }}

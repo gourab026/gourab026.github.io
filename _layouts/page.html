@@ -30,8 +30,10 @@ layout: default
 
 <div class="post-content">
 
-   {% if page.summary %}
+   {% if page.summary and page.summary != "" %}
     <div class="summary">{{page.summary}}</div>
+   {% else %}
+    <hr class="post-divider">
    {% endif %}
 
     {% unless page.toc == false %}
