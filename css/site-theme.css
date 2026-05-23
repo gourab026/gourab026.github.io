@@ -1229,6 +1229,123 @@ ul#results-container a:hover {
 }
 
 /* ═══════════════════════════════════════════════════
+   IN PROGRESS PAGE
+   ═══════════════════════════════════════════════════ */
+.ip-page { max-width: 680px; }
+
+.ip-intro {
+  font-size: 15px;
+  color: var(--ink-2);
+  margin-bottom: 2rem;
+}
+
+.ip-section-label {
+  font-size: 11px;
+  font-family: var(--font-mono);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--accent);
+  margin-bottom: 0.75rem;
+}
+
+.ip-card {
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--accent);
+  border-radius: var(--r-md);
+  background: var(--surface);
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.ip-card-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.ip-card-name {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--ink);
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+}
+
+.ip-card-tagline {
+  font-size: 13px;
+  color: var(--ink-2);
+  margin-top: 0.25rem;
+}
+
+.ip-card-link {
+  font-size: 13px;
+  color: var(--accent);
+  text-decoration: none;
+  white-space: nowrap;
+  font-weight: 500;
+  padding-top: 0.15rem;
+  flex-shrink: 0;
+}
+.ip-card-link:hover { color: var(--accent-hover); text-decoration: underline; }
+
+.ip-card-desc {
+  font-size: 14px;
+  color: var(--ink-2);
+  line-height: 1.7;
+  margin: 0.75rem 0 1.25rem;
+}
+
+.ip-stack {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  margin-bottom: 1.25rem;
+}
+
+.ip-tag {
+  font-size: 11px;
+  font-family: var(--font-mono);
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 2px 7px;
+  color: var(--ink-2);
+}
+
+.ip-status {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 13px;
+  color: var(--ink-4);
+}
+
+.ip-status-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #22c55e;
+  display: inline-block;
+  flex-shrink: 0;
+  animation: ip-pulse 2.2s ease-in-out infinite;
+}
+
+@keyframes ip-pulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.45); }
+  50%       { box-shadow: 0 0 0 5px rgba(34, 197, 94, 0); }
+}
+
+.ip-note {
+  font-size: 13px;
+  color: var(--ink-4);
+}
+.ip-note a { color: var(--accent); text-decoration: none; }
+.ip-note a:hover { text-decoration: underline; }
+
+/* ═══════════════════════════════════════════════════
    CALLOUTS / ALERTS — ADHD-friendly
    ═══════════════════════════════════════════════════ */
 .bs-callout {
