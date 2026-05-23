@@ -67,6 +67,22 @@
                             fuzzy: true,
                     })
                     </script>
+                    <script type="text/javascript">
+                    (function() {
+                      var rc = document.getElementById('results-container');
+                      var si = document.getElementById('search-input');
+                      function syncVis() {
+                        rc.style.setProperty('display', rc.children.length > 0 ? 'block' : 'none', 'important');
+                      }
+                      new MutationObserver(syncVis).observe(rc, { childList: true });
+                      document.addEventListener('click', function(e) {
+                        if (!e.target.closest('#search-demo-container')) {
+                          rc.style.setProperty('display', 'none', 'important');
+                        }
+                      });
+                      si.addEventListener('focus', syncVis);
+                    })();
+                    </script>
                     <!--end search-->
                 </li>
             </ul>

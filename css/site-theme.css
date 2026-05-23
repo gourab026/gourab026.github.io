@@ -1194,6 +1194,7 @@ a.btn.btn-outline:hover {
 }
 
 ul#results-container {
+  display: none !important;
   position: absolute !important;
   background: var(--surface) !important;
   border: 1px solid var(--border) !important;
