@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>JWT Decoder — Tools</title>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --bg: #FAF9F5; --surface: #F4F2EC; --border: #E4E0D6;
+  --ink: #18181B; --ink-2: #3F3F46; --ink-4: #A1A1AA;
+  --accent: #B4541A; --accent-hover: #933F10;
+  --font: -apple-system,'Inter',BlinkMacSystemFont,'Segoe UI',sans-serif;
+  --mono: 'JetBrains Mono','Fira Code',monospace;
+  --r: 8px;
+}
+body { font-family: var(--font); background: var(--bg); color: var(--ink); line-height: 1.6; padding: 2rem 1rem 4rem; -webkit-font-smoothing: antialiased; }
+.container { max-width: 780px; margin: 0 auto; }
+.back { font-size: 13px; color: var(--ink-4); text-decoration: none; display: inline-block; margin-bottom: 2rem; }
+.back:hover { color: var(--accent); }
+h1 { font-size: 1.75rem; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 0.3rem; }
+.subtitle { font-size: 14px; color: var(--ink-2); margin-bottom: 2rem; }
+
+.input-wrap { position: relative; margin-bottom: 1.25rem; }
+textarea {
+  width: 100%; font-family: var(--mono); font-size: 13px; color: var(--ink);
+  background: white; border: 1px solid var(--border); border-radius: var(--r);
+  padding: 0.875rem 1rem; resize: vertical; min-height: 90px; outline: none;
+  transition: border-color 0.15s; line-height: 1.6;
+}
+textarea:focus { border-color: var(--accent); }
+textarea::placeholder { color: var(--ink-4); }
+
+.top-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.5rem; }
+.input-label { font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--ink-4); }
+.btn-clear { font-size: 12px; color: var(--ink-4); background: none; border: none; cursor: pointer; padding: 0; }
+.btn-clear:hover { color: var(--accent); }
+
+/* Status banner */
+.banner { display: none; align-items: center; gap: 0.5rem; padding: 0.6rem 1rem; border-radius: var(--r); margin-bottom: 1.25rem; font-size: 13px; }
+.banner.valid   { display: flex; background: #f0fdf4; border: 1px solid #bbf7d0; color: #15803d; }
+.banner.expired { display: flex; background: #fef2f2; border: 1px solid #fecaca; color: #dc2626; }
+.banner.noexp   { display: flex; background: #fefce8; border: 1px solid #fef08a; color: #92400e; }
+.banner-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
+.valid .banner-dot   { background: #16a34a; }
+.expired .banner-dot { background: #dc2626; }
+.noexp .banner-dot   { background: #ca8a04; }
+
+/* Three panel grid */
+.panels { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem; }
+.panel-sig { grid-column: 1 / -1; }
+@media (max-width: 600px) { .panels { grid-template-columns: 1fr; } .panel-sig { grid-column: 1; } }
+
+.panel {
+  background: white; border: 1px solid var(--border); border-radius: var(--r);
+  overflow: hidden; min-height: 160px;
+}
+.panel-head {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0.6rem 1rem; border-bottom: 1px solid var(--border);
+}
+.panel-title { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; }
+.panel-head-badge {
+  font-size: 10px; font-family: var(--mono); padding: 2px 7px;
+  border-radius: 4px; background: var(--surface); color: var(--ink-2); border: 1px solid var(--border);
+}
+.panel-header .panel-title { color: #6366f1; }
+.panel-header .panel-head { border-color: #c7d2fe; background: #eef2ff; }
+.panel-payload .panel-title { color: #059669; }
+.panel-payload .panel-head { border-color: #a7f3d0; background: #ecfdf5; }
+.panel-sig .panel-title { color: var(--ink-4); }
+
+.panel-body { padding: 1rem; }
+pre {
+  font-family: var(--mono); font-size: 12px; line-height: 1.7; white-space: pre-wrap;
+  word-break: break-all; color: var(--ink-2);
+}
+.json-key   { color: #6366f1; }
+.json-str   { color: #059669; }
+.json-num   { color: #d97706; }
+.json-bool  { color: #dc2626; }
+.json-null  { color: var(--ink-4); }
+
+.claims-table { width: 100%; border-collapse: collapse; font-size: 12px; }
+.claims-table td { padding: 4px 6px; vertical-align: top; }
+.claims-table td:first-child { font-family: var(--mono); color: #6366f1; width: 80px; white-space: nowrap; }
+.claims-table td:last-child { color: var(--ink-2); word-break: break-word; }
+.claim-ts { font-size: 10px; color: var(--ink-4); display: block; }
+
+.sig-text {
+  font-family: var(--mono); font-size: 11px; color: var(--ink-4); word-break: break-all; line-height: 1.7;
+}
+
+.empty-state { color: var(--ink-4); font-size: 13px; font-style: italic; padding: 1rem 0; }
+
+.copy-sig { font-size: 11px; color: var(--ink-4); background: none; border: none; cursor: pointer; }
+.copy-sig:hover { color: var(--accent); }
+
+footer { margin-top: 3rem; font-size: 12px; color: var(--ink-4); text-align: center; }
+footer a { color: var(--accent); text-decoration: none; }
+</style>
+</head>
+<body>
+<div class="container">
+  <a href="index.html" class="back">← Back to tools</a>
+  <h1>JWT Decoder</h1>
+  <p class="subtitle">Paste any JWT to decode header, payload, and inspect claims. Entirely client-side — your token never leaves the browser.</p>
+
+  <div class="top-row">
+    <span class="input-label">Token</span>
+    <button class="btn-clear" id="clear-btn">Clear</button>
+  </div>
+  <div class="input-wrap">
+    <textarea id="jwt-input" placeholder="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIn0.signature" spellcheck="false"></textarea>
+  </div>
+
+  <div class="banner" id="banner">
+    <span class="banner-dot"></span>
+    <span id="banner-text"></span>
+  </div>
+
+  <div class="panels">
+    <div class="panel panel-header">
+      <div class="panel-head">
+        <span class="panel-title">Header</span>
+        <span class="panel-head-badge" id="alg-badge">—</span>
+      </div>
+      <div class="panel-body" id="header-body"><p class="empty-state">Paste a token above</p></div>
+    </div>
+
+    <div class="panel panel-payload">
+      <div class="panel-head">
+        <span class="panel-title">Payload</span>
+      </div>
+      <div class="panel-body" id="payload-body"><p class="empty-state">Paste a token above</p></div>
+    </div>
+
+    <div class="panel panel-sig">
+      <div class="panel-head">
+        <span class="panel-title">Signature</span>
+        <button class="copy-sig" id="copy-sig">Copy</button>
+      </div>
+      <div class="panel-body"><div class="sig-text" id="sig-body">—</div></div>
+    </div>
+  </div>
+</div>
+
+<footer><a href="../index.html">gourab026.github.io</a></footer>
+
+<script>
+function b64urlDecode(str) {
+  try {
+    str = str.replace(/-/g, '+').replace(/_/g, '/');
+    while (str.length % 4) str += '=';
+    return decodeURIComponent(escape(atob(str)));
+  } catch { return null; }
+}
+
+function esc(s) {
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+function colorizeJSON(obj, indent) {
+  return JSON.stringify(obj, null, 2)
+    .replace(/("(?:[^"\\]|\\.)*")(\s*:)/g, '<span class="json-key">$1</span>$2')
+    .replace(/:\s*("(?:[^"\\]|\\.)*")/g, ': <span class="json-str">$1</span>')
+    .replace(/:\s*(\d+\.?\d*)/g, ': <span class="json-num">$1</span>')
+    .replace(/:\s*(true|false)/g, ': <span class="json-bool">$1</span>')
+    .replace(/:\s*(null)/g, ': <span class="json-null">$1</span>');
+}
+
+const CLAIM_NAMES = {
+  sub: 'Subject', iss: 'Issuer', aud: 'Audience', exp: 'Expires',
+  iat: 'Issued at', nbf: 'Not before', jti: 'JWT ID', name: 'Name',
+  email: 'Email', roles: 'Roles', scope: 'Scope',
+};
+
+function fmtTimestamp(ts) {
+  try {
+    const d = new Date(ts * 1000);
+    return d.toISOString().replace('T', ' ').slice(0, 19) + ' UTC';
+  } catch { return String(ts); }
+}
+
+function renderPayload(obj) {
+  const tsKeys = new Set(['exp','iat','nbf']);
+  let html = '<table class="claims-table">';
+  for (const [k, v] of Object.entries(obj)) {
+    const label = CLAIM_NAMES[k] || k;
+    let val = esc(typeof v === 'object' ? JSON.stringify(v) : String(v));
+    let extra = '';
+    if (tsKeys.has(k) && typeof v === 'number') {
+      extra = '<span class="claim-ts">' + esc(fmtTimestamp(v)) + '</span>';
+    }
+    html += `<tr><td>${esc(k)}</td><td>${val}${extra}</td></tr>`;
+  }
+  return html + '</table>';
+}
+
+function decode(raw) {
+  raw = raw.trim();
+  if (!raw) { reset(); return; }
+
+  const parts = raw.split('.');
+  if (parts.length !== 3) { reset('Invalid JWT format — expected 3 dot-separated parts.'); return; }
+
+  const [hRaw, pRaw, sRaw] = parts;
+
+  const hStr = b64urlDecode(hRaw);
+  const pStr = b64urlDecode(pRaw);
+
+  let hObj, pObj;
+  try { hObj = JSON.parse(hStr); } catch { reset('Could not decode header — check token.'); return; }
+  try { pObj = JSON.parse(pStr); } catch { reset('Could not decode payload — check token.'); return; }
+
+  // Header
+  document.getElementById('alg-badge').textContent = hObj.alg || '—';
+  document.getElementById('header-body').innerHTML = '<pre>' + colorizeJSON(hObj) + '</pre>';
+
+  // Payload
+  document.getElementById('payload-body').innerHTML = renderPayload(pObj);
+
+  // Signature
+  document.getElementById('sig-body').textContent = sRaw;
+
+  // Banner
+  const banner = document.getElementById('banner');
+  banner.className = 'banner';
+  const now = Math.floor(Date.now() / 1000);
+  if (pObj.exp === undefined) {
+    banner.classList.add('noexp');
+    document.getElementById('banner-text').textContent = 'No expiry claim (exp) — token does not expire.';
+  } else if (pObj.exp < now) {
+    banner.classList.add('expired');
+    document.getElementById('banner-text').textContent = 'Token expired · ' + fmtTimestamp(pObj.exp);
+  } else {
+    banner.classList.add('valid');
+    const secsLeft = pObj.exp - now;
+    const h = Math.floor(secsLeft / 3600), m = Math.floor((secsLeft % 3600) / 60);
+    document.getElementById('banner-text').textContent = 'Token valid · expires ' + fmtTimestamp(pObj.exp) + (h > 0 ? ` (${h}h ${m}m remaining)` : ` (${m}m remaining)`);
+  }
+}
+
+function reset(msg) {
+  const placeholder = msg ? `<p class="empty-state">${esc(msg)}</p>` : '<p class="empty-state">Paste a token above</p>';
+  document.getElementById('header-body').innerHTML = placeholder;
+  document.getElementById('payload-body').innerHTML = placeholder;
+  document.getElementById('sig-body').textContent = '—';
+  document.getElementById('alg-badge').textContent = '—';
+  document.getElementById('banner').className = 'banner';
+}
+
+let timer;
+document.getElementById('jwt-input').addEventListener('input', function() {
+  clearTimeout(timer);
+  timer = setTimeout(() => decode(this.value), 200);
+});
+
+document.getElementById('clear-btn').addEventListener('click', () => {
+  document.getElementById('jwt-input').value = '';
+  reset();
+});
+
+document.getElementById('copy-sig').addEventListener('click', function() {
+  const sig = document.getElementById('sig-body').textContent;
+  if (sig === '—') return;
+  navigator.clipboard.writeText(sig).then(() => {
+    this.textContent = 'Copied!';
+    setTimeout(() => { this.textContent = 'Copy'; }, 1500);
+  });
+});
+</script>
+</body>
+</html>

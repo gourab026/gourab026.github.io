@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Encoder / Decoder — Tools</title>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --bg: #FAF9F5; --surface: #F4F2EC; --border: #E4E0D6;
+  --ink: #18181B; --ink-2: #3F3F46; --ink-4: #A1A1AA;
+  --accent: #B4541A; --accent-hover: #933F10;
+  --font: -apple-system,'Inter',BlinkMacSystemFont,'Segoe UI',sans-serif;
+  --mono: 'JetBrains Mono','Fira Code',monospace;
+  --r: 8px;
+}
+body { font-family: var(--font); background: var(--bg); color: var(--ink); line-height: 1.6; padding: 2rem 1rem 4rem; -webkit-font-smoothing: antialiased; }
+.container { max-width: 700px; margin: 0 auto; }
+.back { font-size: 13px; color: var(--ink-4); text-decoration: none; display: inline-block; margin-bottom: 2rem; }
+.back:hover { color: var(--accent); }
+h1 { font-size: 1.75rem; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 0.3rem; }
+.subtitle { font-size: 14px; color: var(--ink-2); margin-bottom: 2rem; }
+
+/* Tabs */
+.tabs { display: flex; gap: 0; border-bottom: 1px solid var(--border); margin-bottom: 1.5rem; }
+.tab {
+  padding: 0.5rem 1.1rem; font-size: 13px; border: none; background: none; cursor: pointer;
+  color: var(--ink-4); font-family: var(--font); border-bottom: 2px solid transparent;
+  margin-bottom: -1px; transition: color 0.15s, border-color 0.15s;
+}
+.tab.active { color: var(--accent); border-bottom-color: var(--accent); font-weight: 600; }
+.tab:hover:not(.active) { color: var(--ink-2); }
+
+/* Layout */
+.area-label { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--ink-4); margin-bottom: 0.4rem; }
+textarea {
+  width: 100%; font-family: var(--mono); font-size: 13px; color: var(--ink);
+  background: white; border: 1px solid var(--border); border-radius: var(--r);
+  padding: 0.875rem 1rem; resize: vertical; outline: none;
+  transition: border-color 0.15s; line-height: 1.65;
+}
+textarea:focus { border-color: var(--accent); }
+textarea::placeholder { color: var(--ink-4); }
+#input-area { min-height: 130px; }
+#output-area { min-height: 130px; background: var(--surface); }
+
+/* Action row */
+.action-row { display: flex; align-items: center; gap: 0.5rem; padding: 0.75rem 0; }
+.btn {
+  padding: 0.45rem 1rem; font-size: 13px; font-weight: 600; border-radius: 6px;
+  cursor: pointer; font-family: var(--font); transition: 0.15s;
+}
+.btn-primary { background: var(--accent); color: white; border: none; }
+.btn-primary:hover { background: var(--accent-hover); }
+.btn-secondary {
+  background: white; color: var(--ink-2); border: 1px solid var(--border);
+}
+.btn-secondary:hover { border-color: var(--accent); color: var(--accent); }
+.btn-secondary.ok { border-color: #16a34a; color: #16a34a; }
+.sep { flex: 1; }
+
+.arrow-row { display: flex; align-items: center; justify-content: center; gap: 0.5rem; padding: 0.15rem 0; }
+.arrow-btn {
+  background: white; border: 1px solid var(--border); border-radius: 6px;
+  padding: 5px 10px; cursor: pointer; font-size: 12px; color: var(--ink-4);
+  font-family: var(--font); transition: 0.15s;
+}
+.arrow-btn:hover { border-color: var(--accent); color: var(--accent); }
+
+/* Error */
+.error-msg { font-size: 12px; color: #dc2626; margin-top: 0.4rem; min-height: 1.4em; }
+
+/* Mode info */
+.mode-info { font-size: 12px; color: var(--ink-4); background: var(--surface); border: 1px solid var(--border); border-radius: 6px; padding: 0.5rem 0.75rem; margin-bottom: 1.25rem; }
+.mode-info strong { color: var(--ink-2); }
+
+footer { margin-top: 3rem; font-size: 12px; color: var(--ink-4); text-align: center; }
+footer a { color: var(--accent); text-decoration: none; }
+</style>
+</head>
+<body>
+<div class="container">
+  <a href="index.html" class="back">← Back to tools</a>
+  <h1>Encoder / Decoder</h1>
+  <p class="subtitle">Base64, URL encoding, and HTML entity conversion. All client-side.</p>
+
+  <div class="tabs">
+    <button class="tab active" data-mode="base64">Base64</button>
+    <button class="tab" data-mode="url">URL Encode</button>
+    <button class="tab" data-mode="html">HTML Entities</button>
+    <button class="tab" data-mode="hex">Hex</button>
+  </div>
+
+  <div class="mode-info" id="mode-info"></div>
+
+  <div class="area-label">Input</div>
+  <textarea id="input-area" placeholder="Paste text here…" spellcheck="false"></textarea>
+
+  <div class="action-row">
+    <button class="btn btn-primary" id="encode-btn">Encode ↓</button>
+    <button class="btn btn-primary" id="decode-btn">Decode ↑</button>
+    <span class="sep"></span>
+    <button class="btn btn-secondary" id="swap-btn">⇅ Swap</button>
+    <button class="btn btn-secondary" id="clear-btn">Clear</button>
+  </div>
+
+  <div class="error-msg" id="error-msg"></div>
+
+  <div class="area-label">Output</div>
+  <textarea id="output-area" readonly placeholder="Result will appear here…"></textarea>
+
+  <div class="action-row">
+    <span class="sep"></span>
+    <button class="btn btn-secondary" id="copy-btn">Copy output</button>
+  </div>
+</div>
+
+<footer><a href="../index.html">gourab026.github.io</a></footer>
+
+<script>
+let mode = 'base64';
+
+const MODE_INFO = {
+  base64: '<strong>Base64</strong> — RFC 4648 standard encoding. Encode converts UTF-8 text → Base64. Decode reverses it.',
+  url:    '<strong>URL Encode</strong> — Encodes special characters for safe use in URLs (percent-encoding). Decode reverses it.',
+  html:   '<strong>HTML Entities</strong> — Encode converts &amp; &lt; &gt; " \' to named entities. Decode reverses it.',
+  hex:    '<strong>Hex</strong> — Converts each character to its UTF-8 byte representation in hexadecimal. Decode reverses it.',
+};
+
+function setMode(m) {
+  mode = m;
+  document.querySelectorAll('.tab').forEach(t => t.classList.toggle('active', t.dataset.mode === m));
+  document.getElementById('mode-info').innerHTML = MODE_INFO[m];
+  clearError();
+}
+
+function clearError() { document.getElementById('error-msg').textContent = ''; }
+function setError(msg) { document.getElementById('error-msg').textContent = msg; }
+
+// Codec functions
+function encode(text) {
+  if (mode === 'base64') {
+    return btoa(unescape(encodeURIComponent(text)));
+  }
+  if (mode === 'url') {
+    return encodeURIComponent(text);
+  }
+  if (mode === 'html') {
+    return text
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#39;');
+  }
+  if (mode === 'hex') {
+    return [...new TextEncoder().encode(text)]
+      .map(b => b.toString(16).padStart(2,'0'))
+      .join(' ');
+  }
+}
+
+function decode(text) {
+  if (mode === 'base64') {
+    try { return decodeURIComponent(escape(atob(text.trim()))); }
+    catch { throw new Error('Invalid Base64 — check input.'); }
+  }
+  if (mode === 'url') {
+    try { return decodeURIComponent(text); }
+    catch { throw new Error('Invalid percent-encoding — check input.'); }
+  }
+  if (mode === 'html') {
+    const el = document.createElement('textarea');
+    el.innerHTML = text;
+    return el.value;
+  }
+  if (mode === 'hex') {
+    try {
+      const bytes = text.trim().split(/\s+/).map(h => {
+        const n = parseInt(h, 16);
+        if (isNaN(n)) throw new Error();
+        return n;
+      });
+      return new TextDecoder().decode(new Uint8Array(bytes));
+    } catch { throw new Error('Invalid hex — expected space-separated hex bytes.'); }
+  }
+}
+
+document.getElementById('encode-btn').addEventListener('click', () => {
+  clearError();
+  const input = document.getElementById('input-area').value;
+  if (!input) return;
+  try { document.getElementById('output-area').value = encode(input); }
+  catch(e) { setError(e.message); }
+});
+
+document.getElementById('decode-btn').addEventListener('click', () => {
+  clearError();
+  const input = document.getElementById('input-area').value;
+  if (!input) return;
+  try { document.getElementById('output-area').value = decode(input); }
+  catch(e) { setError(e.message); }
+});
+
+document.getElementById('swap-btn').addEventListener('click', () => {
+  clearError();
+  const out = document.getElementById('output-area').value;
+  if (!out) return;
+  document.getElementById('input-area').value = out;
+  document.getElementById('output-area').value = '';
+});
+
+document.getElementById('clear-btn').addEventListener('click', () => {
+  document.getElementById('input-area').value = '';
+  document.getElementById('output-area').value = '';
+  clearError();
+});
+
+document.getElementById('copy-btn').addEventListener('click', function() {
+  const val = document.getElementById('output-area').value;
+  if (!val) return;
+  navigator.clipboard.writeText(val).then(() => {
+    this.textContent = 'Copied!';
+    this.classList.add('ok');
+    setTimeout(() => { this.textContent = 'Copy output'; this.classList.remove('ok'); }, 1600);
+  });
+});
+
+document.querySelectorAll('.tab').forEach(t => {
+  t.addEventListener('click', () => setMode(t.dataset.mode));
+});
+
+setMode('base64');
+</script>
+</body>
+</html>

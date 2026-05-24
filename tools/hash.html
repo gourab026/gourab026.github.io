@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hash Generator — Tools</title>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --bg: #FAF9F5; --surface: #F4F2EC; --border: #E4E0D6;
+  --ink: #18181B; --ink-2: #3F3F46; --ink-4: #A1A1AA;
+  --accent: #B4541A; --accent-hover: #933F10;
+  --font: -apple-system,'Inter',BlinkMacSystemFont,'Segoe UI',sans-serif;
+  --mono: 'JetBrains Mono','Fira Code',monospace;
+  --r: 8px;
+}
+body { font-family: var(--font); background: var(--bg); color: var(--ink); line-height: 1.6; padding: 2rem 1rem 4rem; -webkit-font-smoothing: antialiased; }
+.container { max-width: 680px; margin: 0 auto; }
+.back { font-size: 13px; color: var(--ink-4); text-decoration: none; display: inline-block; margin-bottom: 2rem; }
+.back:hover { color: var(--accent); }
+h1 { font-size: 1.75rem; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 0.3rem; }
+.subtitle { font-size: 14px; color: var(--ink-2); margin-bottom: 2rem; }
+
+/* Mode toggle */
+.mode-bar { display: flex; background: white; border: 1px solid var(--border); border-radius: var(--r); padding: 3px; gap: 3px; margin-bottom: 1.25rem; width: fit-content; }
+.mode-btn {
+  padding: 5px 16px; font-size: 13px; border: none; border-radius: 6px; cursor: pointer;
+  background: none; color: var(--ink-2); font-family: var(--font); transition: 0.15s;
+}
+.mode-btn.active { background: var(--accent); color: white; }
+
+/* Text input */
+.section { display: none; }
+.section.active { display: block; }
+
+.top-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.5rem; }
+.section-label { font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--ink-4); }
+.btn-clear { font-size: 12px; color: var(--ink-4); background: none; border: none; cursor: pointer; }
+.btn-clear:hover { color: var(--accent); }
+
+textarea {
+  width: 100%; font-family: var(--mono); font-size: 13px; color: var(--ink);
+  background: white; border: 1px solid var(--border); border-radius: var(--r);
+  padding: 0.875rem 1rem; resize: vertical; min-height: 110px; outline: none;
+  transition: border-color 0.15s; line-height: 1.6;
+}
+textarea:focus { border-color: var(--accent); }
+textarea::placeholder { color: var(--ink-4); }
+
+/* File drop */
+.drop-zone {
+  border: 2px dashed var(--border); border-radius: var(--r); padding: 2.5rem 1rem;
+  text-align: center; cursor: pointer; transition: border-color 0.15s, background 0.15s;
+  background: white;
+}
+.drop-zone:hover, .drop-zone.over { border-color: var(--accent); background: #fdf5f0; }
+.drop-zone input[type=file] { display: none; }
+.drop-icon { font-size: 2rem; margin-bottom: 0.5rem; }
+.drop-label { font-size: 14px; color: var(--ink-2); }
+.drop-sub { font-size: 12px; color: var(--ink-4); margin-top: 0.25rem; }
+.file-info { display: none; font-size: 13px; color: var(--ink-2); margin-top: 0.75rem; font-family: var(--mono); }
+
+/* Results */
+.results { margin-top: 1.25rem; display: flex; flex-direction: column; gap: 0.6rem; }
+.hash-row {
+  background: white; border: 1px solid var(--border); border-radius: var(--r);
+  padding: 0.75rem 1rem; display: grid; grid-template-columns: 70px 1fr auto; align-items: center; gap: 0.75rem;
+}
+.hash-algo { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--ink-4); white-space: nowrap; }
+.hash-val { font-family: var(--mono); font-size: 12px; color: var(--ink-2); word-break: break-all; line-height: 1.5; }
+.hash-val.empty { color: var(--ink-4); font-style: italic; font-family: var(--font); }
+.btn-copy {
+  font-size: 11px; padding: 4px 10px; border: 1px solid var(--border); border-radius: 5px;
+  background: var(--surface); color: var(--ink-2); cursor: pointer; font-family: var(--font);
+  white-space: nowrap; transition: 0.15s; flex-shrink: 0;
+}
+.btn-copy:hover { border-color: var(--accent); color: var(--accent); }
+.btn-copy.ok { border-color: #16a34a; color: #16a34a; }
+
+.computing { font-size: 12px; color: var(--ink-4); font-family: var(--mono); }
+
+footer { margin-top: 3rem; font-size: 12px; color: var(--ink-4); text-align: center; }
+footer a { color: var(--accent); text-decoration: none; }
+</style>
+</head>
+<body>
+<div class="container">
+  <a href="index.html" class="back">← Back to tools</a>
+  <h1>Hash Generator</h1>
+  <p class="subtitle">Compute SHA hashes for text or files. Runs in your browser via the Web Crypto API.</p>
+
+  <div class="mode-bar">
+    <button class="mode-btn active" data-mode="text">Text</button>
+    <button class="mode-btn" data-mode="file">File</button>
+  </div>
+
+  <!-- Text section -->
+  <div class="section active" id="sec-text">
+    <div class="top-row">
+      <span class="section-label">Input</span>
+      <button class="btn-clear" id="clear-text">Clear</button>
+    </div>
+    <textarea id="text-input" placeholder="Type or paste text to hash…" spellcheck="false"></textarea>
+  </div>
+
+  <!-- File section -->
+  <div class="section" id="sec-file">
+    <div class="drop-zone" id="drop-zone">
+      <input type="file" id="file-input">
+      <div class="drop-icon">⬆</div>
+      <div class="drop-label">Drop a file here or click to browse</div>
+      <div class="drop-sub">Any file type · processed locally · not uploaded</div>
+      <div class="file-info" id="file-info"></div>
+    </div>
+  </div>
+
+  <div class="results" id="results">
+    <div class="hash-row">
+      <div class="hash-algo">SHA-1</div>
+      <div class="hash-val empty" id="sha1">—</div>
+      <button class="btn-copy" data-target="sha1">Copy</button>
+    </div>
+    <div class="hash-row">
+      <div class="hash-algo">SHA-256</div>
+      <div class="hash-val empty" id="sha256">—</div>
+      <button class="btn-copy" data-target="sha256">Copy</button>
+    </div>
+    <div class="hash-row">
+      <div class="hash-algo">SHA-384</div>
+      <div class="hash-val empty" id="sha384">—</div>
+      <button class="btn-copy" data-target="sha384">Copy</button>
+    </div>
+    <div class="hash-row">
+      <div class="hash-algo">SHA-512</div>
+      <div class="hash-val empty" id="sha512">—</div>
+      <button class="btn-copy" data-target="sha512">Copy</button>
+    </div>
+  </div>
+</div>
+
+<footer><a href="../index.html">gourab026.github.io</a></footer>
+
+<script>
+const ALGOS = { sha1: 'SHA-1', sha256: 'SHA-256', sha384: 'SHA-384', sha512: 'SHA-512' };
+
+async function computeHashes(buffer) {
+  for (const [id, algo] of Object.entries(ALGOS)) {
+    const el = document.getElementById(id);
+    el.textContent = 'computing…';
+    el.className = 'hash-val computing';
+    try {
+      const hashBuf = await crypto.subtle.digest(algo, buffer);
+      const hex = Array.from(new Uint8Array(hashBuf), b => b.toString(16).padStart(2,'0')).join('');
+      el.textContent = hex;
+      el.className = 'hash-val';
+    } catch(e) {
+      el.textContent = 'error';
+      el.className = 'hash-val empty';
+    }
+  }
+}
+
+function clearHashes() {
+  for (const id of Object.keys(ALGOS)) {
+    const el = document.getElementById(id);
+    el.textContent = '—';
+    el.className = 'hash-val empty';
+  }
+}
+
+// Text mode
+let textTimer;
+document.getElementById('text-input').addEventListener('input', function() {
+  clearTimeout(textTimer);
+  if (!this.value) { clearHashes(); return; }
+  textTimer = setTimeout(async () => {
+    const buf = new TextEncoder().encode(this.value);
+    await computeHashes(buf);
+  }, 300);
+});
+document.getElementById('clear-text').addEventListener('click', () => {
+  document.getElementById('text-input').value = '';
+  clearHashes();
+});
+
+// File mode
+const dropZone = document.getElementById('drop-zone');
+const fileInput = document.getElementById('file-input');
+const fileInfo  = document.getElementById('file-info');
+
+dropZone.addEventListener('click', () => fileInput.click());
+dropZone.addEventListener('dragover', e => { e.preventDefault(); dropZone.classList.add('over'); });
+dropZone.addEventListener('dragleave', () => dropZone.classList.remove('over'));
+dropZone.addEventListener('drop', e => { e.preventDefault(); dropZone.classList.remove('over'); handleFile(e.dataTransfer.files[0]); });
+fileInput.addEventListener('change', () => handleFile(fileInput.files[0]));
+
+function fmtSize(bytes) {
+  if (bytes < 1024) return bytes + ' B';
+  if (bytes < 1048576) return (bytes/1024).toFixed(1) + ' KB';
+  return (bytes/1048576).toFixed(2) + ' MB';
+}
+
+function handleFile(file) {
+  if (!file) return;
+  fileInfo.style.display = 'block';
+  fileInfo.textContent = file.name + ' · ' + fmtSize(file.size);
+  clearHashes();
+  const reader = new FileReader();
+  reader.onload = async e => { await computeHashes(e.target.result); };
+  reader.readAsArrayBuffer(file);
+}
+
+// Mode switching
+document.querySelectorAll('.mode-btn').forEach(btn => {
+  btn.addEventListener('click', function() {
+    document.querySelectorAll('.mode-btn').forEach(b => b.classList.remove('active'));
+    this.classList.add('active');
+    const mode = this.dataset.mode;
+    document.getElementById('sec-text').classList.toggle('active', mode === 'text');
+    document.getElementById('sec-file').classList.toggle('active', mode === 'file');
+    clearHashes();
+  });
+});
+
+// Copy buttons
+document.querySelectorAll('.btn-copy').forEach(btn => {
+  btn.addEventListener('click', function() {
+    const val = document.getElementById(this.dataset.target).textContent;
+    if (val === '—' || val === 'computing…') return;
+    navigator.clipboard.writeText(val).then(() => {
+      this.textContent = 'Copied!';
+      this.classList.add('ok');
+      setTimeout(() => { this.textContent = 'Copy'; this.classList.remove('ok'); }, 1500);
+    });
+  });
+});
+</script>
+</body>
+</html>
