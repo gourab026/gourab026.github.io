@@ -14,6 +14,7 @@ toc: false
 <a href="portfolio.html" class="btn">View Portfolio</a>
 <a href="blog.html" class="btn btn-outline">Read the Blog</a>
 <a href="projects.html" class="btn btn-outline">Projects</a>
+<a href="tools/index.html" class="btn btn-outline">Tools</a>
 </div>
 </div>
 
@@ -57,6 +58,15 @@ toc: false
 <div class="featured-item-desc">Completed builds and documented experiments — from desktop AI companions to static web tooling.</div>
 </div>
 <span class="featured-item-arrow">View projects →</span>
+</a>
+
+<a href="tools/index.html" class="featured-item">
+<div class="featured-item-icon"><i class="fa fa-wrench" aria-hidden="true"></i></div>
+<div class="featured-item-body">
+<div class="featured-item-title">Tools</div>
+<div class="featured-item-desc">Live browser tools — password generator, JWT decoder, hash generator, encoder/decoder, Kanban board, and more.</div>
+</div>
+<span class="featured-item-arrow">Open tools →</span>
 </a>
 
 </div>
