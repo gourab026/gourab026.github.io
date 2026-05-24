@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IP Geolocation — Tools</title>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --bg: #FAF9F5; --surface: #F4F2EC; --border: #E4E0D6;
+  --ink: #18181B; --ink-2: #3F3F46; --ink-4: #A1A1AA;
+  --accent: #B4541A; --accent-hover: #933F10;
+  --font: -apple-system,'Inter',BlinkMacSystemFont,'Segoe UI',sans-serif;
+  --mono: 'JetBrains Mono','Fira Code',monospace;
+  --r: 8px;
+}
+body { font-family: var(--font); background: var(--bg); color: var(--ink); line-height: 1.6; padding: 2rem 1rem 4rem; -webkit-font-smoothing: antialiased; }
+.container { max-width: 640px; margin: 0 auto; }
+.back { font-size: 13px; color: var(--ink-4); text-decoration: none; display: inline-block; margin-bottom: 2rem; }
+.back:hover { color: var(--accent); }
+h1 { font-size: 1.75rem; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 0.3rem; }
+.subtitle { font-size: 14px; color: var(--ink-2); margin-bottom: 1.25rem; }
+
+.notice {
+  font-size: 12px; color: var(--ink-4); background: var(--surface);
+  border: 1px solid var(--border); border-radius: 6px;
+  padding: 0.5rem 0.875rem; margin-bottom: 1.5rem; line-height: 1.6;
+}
+.notice a { color: var(--accent); text-decoration: none; }
+.notice a:hover { text-decoration: underline; }
+
+.input-row { display: flex; gap: 0.5rem; margin-bottom: 1.25rem; flex-wrap: wrap; }
+input[type=text] {
+  flex: 1; min-width: 180px; font-family: var(--mono); font-size: 13px; color: var(--ink);
+  background: white; border: 1px solid var(--border); border-radius: var(--r);
+  padding: 0.6rem 0.875rem; outline: none; transition: border-color 0.15s;
+}
+input[type=text]:focus { border-color: var(--accent); }
+input[type=text]::placeholder { color: var(--ink-4); font-family: var(--font); }
+.btn {
+  padding: 0.6rem 1rem; font-size: 13px; font-weight: 600; border-radius: var(--r);
+  cursor: pointer; font-family: var(--font); transition: 0.15s; white-space: nowrap;
+}
+.btn-primary { background: var(--accent); color: white; border: none; }
+.btn-primary:hover { background: var(--accent-hover); }
+.btn-secondary { background: white; color: var(--ink-2); border: 1px solid var(--border); }
+.btn-secondary:hover { border-color: var(--accent); color: var(--accent); }
+
+.loading { text-align: center; padding: 2.5rem 1rem; color: var(--ink-4); font-size: 13px; display: none; }
+.loading.on { display: block; }
+
+.error-box {
+  background: #fef2f2; border: 1px solid #fecaca; border-radius: var(--r);
+  padding: 0.75rem 1rem; font-size: 13px; color: #dc2626; display: none;
+}
+.error-box.on { display: block; }
+
+.result { display: none; }
+.result.on { display: block; }
+
+/* Hero strip */
+.hero-strip {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--r) var(--r) 0 0; border-bottom: none;
+  padding: 1.25rem 1.5rem; display: flex; align-items: center; gap: 1rem;
+}
+.flag { font-size: 2.75rem; line-height: 1; flex-shrink: 0; }
+.hero-ip { font-family: var(--mono); font-size: 1.1rem; font-weight: 700; color: var(--ink); }
+.hero-country { font-size: 14px; color: var(--ink-2); margin-top: 3px; }
+.hero-extra { font-size: 12px; color: var(--ink-4); margin-top: 2px; }
+
+/* Info grid */
+.info-grid {
+  border: 1px solid var(--border); border-top: none;
+  display: grid; grid-template-columns: 1fr 1fr;
+}
+.info-cell {
+  padding: 0.8rem 1.5rem; border-bottom: 1px solid var(--border);
+}
+.info-cell:nth-child(odd) { border-right: 1px solid var(--border); }
+.info-label {
+  font-size: 10px; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 0.08em; color: var(--ink-4); margin-bottom: 3px;
+}
+.info-val { font-size: 13px; color: var(--ink); font-family: var(--mono); word-break: break-word; }
+.info-val.plain { font-family: var(--font); }
+.info-val a { color: var(--accent); text-decoration: none; }
+.info-val a:hover { text-decoration: underline; }
+
+/* Threat section */
+.threat-section {
+  border: 1px solid var(--border); border-top: none;
+  border-radius: 0 0 var(--r) var(--r); overflow: hidden;
+}
+.threat-head {
+  font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em;
+  color: var(--ink-4); padding: 0.7rem 1.5rem 0.35rem; background: white;
+  border-bottom: 1px solid var(--border);
+}
+.threat-links { padding: 0.75rem 1.5rem 1.1rem; display: flex; flex-wrap: wrap; gap: 0.4rem; background: white; }
+.threat-link {
+  font-size: 12px; padding: 4px 11px; border: 1px solid var(--border); border-radius: 4px;
+  background: var(--surface); color: var(--ink-2); text-decoration: none; transition: 0.15s;
+}
+.threat-link:hover { border-color: var(--accent); color: var(--accent); background: white; }
+
+/* EU badge */
+.eu-badge {
+  display: inline-block; font-size: 10px; padding: 1px 6px; border-radius: 3px;
+  background: #dbeafe; color: #1e40af; border: 1px solid #bfdbfe; margin-left: 6px;
+  vertical-align: middle; font-weight: 600;
+}
+
+@media (max-width: 480px) {
+  .info-grid { grid-template-columns: 1fr; }
+  .info-cell:nth-child(odd) { border-right: none; }
+}
+
+footer { margin-top: 3rem; font-size: 12px; color: var(--ink-4); text-align: center; }
+footer a { color: var(--accent); text-decoration: none; }
+</style>
+</head>
+<body>
+<div class="container">
+  <a href="index.html" class="back">← Back to tools</a>
+  <h1>IP Geolocation</h1>
+  <p class="subtitle">Geo-locate any IP, view ASN and organisation info, and pivot to threat intel platforms.</p>
+
+  <div class="notice">
+    <strong>Privacy:</strong> The queried IP is sent to <a href="https://ipapi.co" target="_blank" rel="noopener">ipapi.co</a> for geolocation. Free tier — 1,000 lookups/day. Your own IP is only sent when using "My IP".
+  </div>
+
+  <div class="input-row">
+    <input type="text" id="ip-input" placeholder="8.8.8.8  or  2001:4860:4860::8888" autocomplete="off" spellcheck="false">
+    <button class="btn btn-primary" id="lookup-btn">Look up</button>
+    <button class="btn btn-secondary" id="myip-btn">My IP</button>
+  </div>
+
+  <div class="loading" id="loading">Fetching…</div>
+  <div class="error-box" id="error-box"></div>
+
+  <div class="result" id="result">
+    <div class="hero-strip">
+      <div class="flag" id="r-flag"></div>
+      <div>
+        <div class="hero-ip" id="r-ip"></div>
+        <div class="hero-country" id="r-country"></div>
+        <div class="hero-extra" id="r-extra"></div>
+      </div>
+    </div>
+
+    <div class="info-grid">
+      <div class="info-cell">
+        <div class="info-label">City</div>
+        <div class="info-val plain" id="r-city"></div>
+      </div>
+      <div class="info-cell">
+        <div class="info-label">Region</div>
+        <div class="info-val plain" id="r-region"></div>
+      </div>
+      <div class="info-cell">
+        <div class="info-label">ASN</div>
+        <div class="info-val" id="r-asn"></div>
+      </div>
+      <div class="info-cell">
+        <div class="info-label">Organisation</div>
+        <div class="info-val plain" id="r-org"></div>
+      </div>
+      <div class="info-cell">
+        <div class="info-label">Timezone</div>
+        <div class="info-val" id="r-tz"></div>
+      </div>
+      <div class="info-cell">
+        <div class="info-label">Coordinates</div>
+        <div class="info-val" id="r-coords"></div>
+      </div>
+    </div>
+
+    <div class="threat-section">
+      <div class="threat-head">Threat Intel — open in platform</div>
+      <div class="threat-links" id="r-links"></div>
+    </div>
+  </div>
+</div>
+
+<footer><a href="../index.html">gourab026.github.io</a></footer>
+
+<script>
+function countryFlag(code) {
+  if (!code || code.length !== 2) return '🌐';
+  return [...code.toUpperCase()].map(c =>
+    String.fromCodePoint(0x1F1E6 - 65 + c.charCodeAt(0))
+  ).join('');
+}
+
+function vis(id, show) {
+  document.getElementById(id).classList.toggle('on', show);
+}
+
+async function lookup(target) {
+  vis('loading', true);
+  vis('error-box', false);
+  vis('result', false);
+  try {
+    const url = target
+      ? `https://ipapi.co/${encodeURIComponent(target.trim())}/json/`
+      : 'https://ipapi.co/json/';
+    const res = await fetch(url);
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    const d = await res.json();
+    if (d.error) throw new Error(d.reason || d.message || 'Lookup failed');
+    render(d);
+  } catch (e) {
+    document.getElementById('error-box').textContent = 'Error: ' + e.message;
+    vis('error-box', true);
+  } finally {
+    vis('loading', false);
+  }
+}
+
+function render(d) {
+  const ip = d.ip || '—';
+  document.getElementById('ip-input').value = ip;
+
+  document.getElementById('r-flag').textContent = countryFlag(d.country_code);
+  document.getElementById('r-ip').textContent = ip;
+
+  const countryParts = [d.country_name];
+  if (d.in_eu) countryParts.push('<span class="eu-badge">EU</span>');
+  document.getElementById('r-country').innerHTML = countryParts.join(' ');
+
+  const callingCode = d.country_calling_code ? `+${d.country_calling_code.replace('+','')}` : '';
+  const currency = d.currency_name ? `${d.currency_name} (${d.currency})` : '';
+  document.getElementById('r-extra').textContent = [callingCode, currency].filter(Boolean).join(' · ') || '';
+
+  document.getElementById('r-city').textContent = d.city || '—';
+  document.getElementById('r-region').textContent = [d.region, d.region_code].filter(Boolean).join(' / ') || '—';
+  document.getElementById('r-asn').textContent = d.asn || '—';
+  document.getElementById('r-org').textContent = (d.org || '').replace(/^AS\d+\s*/, '') || '—';
+  document.getElementById('r-tz').textContent = d.timezone ? `${d.timezone} (UTC${d.utc_offset || ''})` : '—';
+
+  const lat = d.latitude, lon = d.longitude;
+  const coordsEl = document.getElementById('r-coords');
+  if (lat != null && lon != null) {
+    coordsEl.innerHTML = `<a href="https://www.openstreetmap.org/?mlat=${lat}&mlon=${lon}&zoom=11" target="_blank" rel="noopener">${lat.toFixed(4)}, ${lon.toFixed(4)} ↗</a>`;
+  } else {
+    coordsEl.textContent = '—';
+  }
+
+  const platforms = [
+    ['VirusTotal',  `https://www.virustotal.com/gui/ip-address/${ip}`],
+    ['AbuseIPDB',   `https://www.abuseipdb.com/check/${ip}`],
+    ['Shodan',      `https://www.shodan.io/host/${ip}`],
+    ['Greynoise',   `https://viz.greynoise.io/ip/${ip}`],
+    ['Censys',      `https://search.censys.io/hosts/${ip}`],
+    ['Talos',       `https://talosintelligence.com/reputation_center/lookup?search=${ip}`],
+    ['BGP.tools',   `https://bgp.tools/search#${ip}`],
+    ['IPinfo',      `https://ipinfo.io/${ip}`],
+  ];
+
+  document.getElementById('r-links').innerHTML = platforms
+    .map(([name, url]) => `<a href="${url}" class="threat-link" target="_blank" rel="noopener">${name} ↗</a>`)
+    .join('');
+
+  vis('result', true);
+}
+
+document.getElementById('lookup-btn').addEventListener('click', () => {
+  const v = document.getElementById('ip-input').value.trim();
+  if (v) lookup(v);
+});
+document.getElementById('ip-input').addEventListener('keydown', e => {
+  if (e.key === 'Enter') { const v = e.target.value.trim(); if (v) lookup(v); }
+});
+document.getElementById('myip-btn').addEventListener('click', () => {
+  document.getElementById('ip-input').value = '';
+  lookup('');
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IOC Pivot — Tools</title>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --bg: #FAF9F5; --surface: #F4F2EC; --border: #E4E0D6;
+  --ink: #18181B; --ink-2: #3F3F46; --ink-4: #A1A1AA;
+  --accent: #B4541A; --accent-hover: #933F10;
+  --font: -apple-system,'Inter',BlinkMacSystemFont,'Segoe UI',sans-serif;
+  --mono: 'JetBrains Mono','Fira Code',monospace;
+  --r: 8px;
+}
+body { font-family: var(--font); background: var(--bg); color: var(--ink); line-height: 1.6; padding: 2rem 1rem 4rem; -webkit-font-smoothing: antialiased; }
+.container { max-width: 860px; margin: 0 auto; }
+.back { font-size: 13px; color: var(--ink-4); text-decoration: none; display: inline-block; margin-bottom: 2rem; }
+.back:hover { color: var(--accent); }
+h1 { font-size: 1.75rem; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 0.3rem; }
+.subtitle { font-size: 14px; color: var(--ink-2); margin-bottom: 1.25rem; }
+
+.notice {
+  font-size: 12px; color: var(--ink-4); background: #f0fdf4;
+  border: 1px solid #bbf7d0; border-radius: 6px;
+  padding: 0.5rem 0.875rem; margin-bottom: 1.5rem;
+}
+
+.top-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.5rem; }
+.area-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--ink-4); }
+
+textarea {
+  width: 100%; font-family: var(--mono); font-size: 12.5px; color: var(--ink);
+  background: white; border: 1px solid var(--border); border-radius: var(--r);
+  padding: 0.875rem 1rem; resize: vertical; min-height: 120px; outline: none;
+  transition: border-color 0.15s; line-height: 1.7;
+}
+textarea:focus { border-color: var(--accent); }
+textarea::placeholder { color: var(--ink-4); font-family: var(--font); font-size: 13px; }
+
+.btn-row { display: flex; gap: 0.5rem; margin: 0.75rem 0 1.5rem; }
+.btn {
+  padding: 0.55rem 1.1rem; font-size: 13px; font-weight: 600; border-radius: var(--r);
+  cursor: pointer; font-family: var(--font); transition: 0.15s; border: none; white-space: nowrap;
+}
+.btn-primary { background: var(--accent); color: white; }
+.btn-primary:hover { background: var(--accent-hover); }
+.btn-secondary { background: white; color: var(--ink-2); border: 1px solid var(--border); }
+.btn-secondary:hover { border-color: var(--accent); color: var(--accent); }
+.stat { font-size: 12px; color: var(--ink-4); align-self: center; margin-left: auto; }
+
+/* Results */
+.results { display: flex; flex-direction: column; gap: 0.6rem; }
+
+.ioc-card {
+  background: white; border: 1px solid var(--border); border-radius: var(--r);
+  overflow: hidden;
+}
+.ioc-card-head {
+  display: flex; align-items: center; gap: 0.75rem; padding: 0.65rem 1rem;
+  border-bottom: 1px solid var(--surface); flex-wrap: wrap;
+}
+.type-badge {
+  font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em;
+  padding: 2px 8px; border-radius: 4px; flex-shrink: 0; font-family: var(--mono);
+}
+.badge-ipv4   { background: #dbeafe; color: #1e40af; }
+.badge-ipv6   { background: #e0e7ff; color: #3730a3; }
+.badge-domain { background: #dcfce7; color: #166534; }
+.badge-url    { background: #fef3c7; color: #92400e; }
+.badge-md5    { background: #f3e8ff; color: #6b21a8; }
+.badge-sha1   { background: #f3e8ff; color: #6b21a8; }
+.badge-sha256 { background: #f3e8ff; color: #6b21a8; }
+.badge-sha512 { background: #f3e8ff; color: #6b21a8; }
+.badge-email  { background: #fce7f3; color: #9d174d; }
+.badge-unknown { background: var(--surface); color: var(--ink-4); }
+
+.ioc-val {
+  font-family: var(--mono); font-size: 12px; color: var(--ink-2);
+  word-break: break-all; flex: 1; min-width: 0;
+}
+.defanged-note { font-size: 10px; color: var(--ink-4); background: var(--surface); padding: 1px 5px; border-radius: 3px; flex-shrink: 0; }
+
+.ioc-card-body { padding: 0.5rem 1rem 0.7rem; display: flex; flex-wrap: wrap; gap: 0.35rem; }
+
+.plat-btn {
+  font-size: 11px; padding: 3px 9px; border: 1px solid var(--border); border-radius: 4px;
+  background: var(--surface); color: var(--ink-2); text-decoration: none; transition: 0.12s;
+  white-space: nowrap;
+}
+.plat-btn:hover { border-color: var(--accent); color: var(--accent); background: white; }
+
+.open-all {
+  font-size: 11px; padding: 3px 9px; border: 1px solid transparent; border-radius: 4px;
+  background: none; color: var(--ink-4); cursor: pointer; font-family: var(--font);
+  transition: 0.12s; margin-left: auto;
+}
+.open-all:hover { color: var(--accent); border-color: var(--border); }
+
+.empty-state { text-align: center; padding: 3rem 1rem; color: var(--ink-4); font-size: 13px; }
+
+footer { margin-top: 3rem; font-size: 12px; color: var(--ink-4); text-align: center; }
+footer a { color: var(--accent); text-decoration: none; }
+</style>
+</head>
+<body>
+<div class="container">
+  <a href="index.html" class="back">← Back to tools</a>
+  <h1>IOC Pivot</h1>
+  <p class="subtitle">Paste indicators of compromise — IPs, domains, URLs, hashes, emails — and get one-click links to investigate on every major threat intel platform. Defanged IOCs are automatically re-fanged.</p>
+
+  <div class="notice">
+    No data is sent anywhere. This tool generates investigation links only — you choose which platforms to open.
+  </div>
+
+  <div class="top-row">
+    <span class="area-label">Indicators</span>
+  </div>
+  <textarea id="ioc-input" placeholder="One indicator per line. Defanged IOCs supported:&#10;8.8.8[.]8&#10;evil[.]com&#10;hxxps://malicious[.]example/path&#10;44d88612fea8a8f36de82e1278abb02f  (MD5)&#10;a3f2c1d4e5b6...                   (SHA-256)" spellcheck="false"></textarea>
+
+  <div class="btn-row">
+    <button class="btn btn-primary" id="analyze-btn">Analyze</button>
+    <button class="btn btn-secondary" id="clear-btn">Clear</button>
+    <span class="stat" id="stat"></span>
+  </div>
+
+  <div class="results" id="results"></div>
+</div>
+
+<footer><a href="../index.html">gourab026.github.io</a></footer>
+
+<script>
+function refang(raw) {
+  return raw
+    .replace(/hxxps?:/gi, m => m.replace(/xx/i, 'tt'))
+    .replace(/\[\.\]/g, '.')
+    .replace(/\[\.]/g, '.')
+    .replace(/\(\.\)/g, '.')
+    .replace(/\[at\]/gi, '@')
+    .replace(/\(at\)/gi, '@')
+    .replace(/\[@\]/gi, '@')
+    .trim();
+}
+
+function detectType(raw) {
+  const v = refang(raw);
+  if (/^[a-fA-F0-9]{128}$/.test(v)) return { type: 'SHA-512', value: v };
+  if (/^[a-fA-F0-9]{64}$/.test(v))  return { type: 'SHA-256', value: v };
+  if (/^[a-fA-F0-9]{40}$/.test(v))  return { type: 'SHA-1',   value: v };
+  if (/^[a-fA-F0-9]{32}$/.test(v))  return { type: 'MD5',     value: v };
+  if (/^https?:\/\//i.test(v))       return { type: 'URL',     value: v };
+  // IPv4 (optional CIDR)
+  const ipv4 = /^(\d{1,3}\.){3}\d{1,3}(\/\d{1,2})?$/.test(v);
+  if (ipv4) {
+    const octs = v.split('/')[0].split('.').map(Number);
+    if (octs.every(o => o <= 255)) return { type: 'IPv4', value: v };
+  }
+  // IPv6
+  if (/^[0-9a-fA-F]{0,4}(:[0-9a-fA-F]{0,4}){2,7}$/.test(v)) return { type: 'IPv6', value: v };
+  // Email
+  if (/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v)) return { type: 'Email', value: v };
+  // Domain (no spaces, has TLD, no slashes)
+  if (/^[a-zA-Z0-9]([a-zA-Z0-9\-]{0,61}[a-zA-Z0-9])?(\.[a-zA-Z0-9\-]+)*\.[a-zA-Z]{2,}$/.test(v)
+      && !v.includes('/')) return { type: 'Domain', value: v };
+  return { type: 'Unknown', value: v };
+}
+
+const PLATFORMS = {
+  IPv4: [
+    ['VirusTotal',  v => `https://www.virustotal.com/gui/ip-address/${v}`],
+    ['AbuseIPDB',   v => `https://www.abuseipdb.com/check/${v}`],
+    ['Shodan',      v => `https://www.shodan.io/host/${v}`],
+    ['Greynoise',   v => `https://viz.greynoise.io/ip/${v}`],
+    ['Censys',      v => `https://search.censys.io/hosts/${v}`],
+    ['Talos',       v => `https://talosintelligence.com/reputation_center/lookup?search=${v}`],
+    ['BGP.tools',   v => `https://bgp.tools/search#${v}`],
+    ['IPinfo',      v => `https://ipinfo.io/${v}`],
+  ],
+  IPv6: [
+    ['VirusTotal',  v => `https://www.virustotal.com/gui/ip-address/${v}`],
+    ['AbuseIPDB',   v => `https://www.abuseipdb.com/check/${v}`],
+    ['Shodan',      v => `https://www.shodan.io/host/${encodeURIComponent(v)}`],
+    ['Censys',      v => `https://search.censys.io/hosts/${v}`],
+    ['BGP.tools',   v => `https://bgp.tools/search#${v}`],
+  ],
+  Domain: [
+    ['VirusTotal',  v => `https://www.virustotal.com/gui/domain/${v}`],
+    ['URLscan.io',  v => `https://urlscan.io/search/#domain:${v}`],
+    ['ThreatFox',   v => `https://threatfox.abuse.ch/browse.php?search=ioc%3A${v}`],
+    ['Talos',       v => `https://talosintelligence.com/reputation_center/lookup?search=${v}`],
+    ['ICANN Whois', v => `https://lookup.icann.org/en/lookup?name=${v}`],
+    ['MXToolbox',   v => `https://mxtoolbox.com/SuperTool.aspx?action=dns:${v}`],
+    ['Censys',      v => `https://search.censys.io/search?resource=hosts&q=${encodeURIComponent(v)}`],
+  ],
+  URL: [
+    ['VirusTotal',  v => `https://www.virustotal.com/gui/search/${encodeURIComponent(v)}`],
+    ['URLscan.io',  v => `https://urlscan.io/search/#page.url:${encodeURIComponent(v)}`],
+    ['Google SB',   v => `https://transparencyreport.google.com/safe-browsing/search?url=${encodeURIComponent(v)}`],
+    ['ThreatFox',   v => `https://threatfox.abuse.ch/browse.php?search=ioc%3A${encodeURIComponent(v)}`],
+  ],
+  MD5: [
+    ['VirusTotal',    v => `https://www.virustotal.com/gui/file/${v}`],
+    ['MalwareBazaar', v => `https://bazaar.abuse.ch/browse.php?search=md5hash:${v}`],
+    ['ThreatFox',     v => `https://threatfox.abuse.ch/browse.php?search=ioc%3A${v}`],
+    ['HybridAnalysis',v => `https://www.hybrid-analysis.com/search?query=${v}`],
+  ],
+  'SHA-1': [
+    ['VirusTotal',    v => `https://www.virustotal.com/gui/file/${v}`],
+    ['MalwareBazaar', v => `https://bazaar.abuse.ch/browse.php?search=sha1hash:${v}`],
+    ['ThreatFox',     v => `https://threatfox.abuse.ch/browse.php?search=ioc%3A${v}`],
+  ],
+  'SHA-256': [
+    ['VirusTotal',    v => `https://www.virustotal.com/gui/file/${v}`],
+    ['MalwareBazaar', v => `https://bazaar.abuse.ch/browse.php?search=sha256hash:${v}`],
+    ['ThreatFox',     v => `https://threatfox.abuse.ch/browse.php?search=ioc%3A${v}`],
+    ['HybridAnalysis',v => `https://www.hybrid-analysis.com/search?query=${v}`],
+    ['Maltiverse',    v => `https://maltiverse.com/sample/${v}`],
+  ],
+  'SHA-512': [
+    ['VirusTotal',    v => `https://www.virustotal.com/gui/file/${v}`],
+    ['HybridAnalysis',v => `https://www.hybrid-analysis.com/search?query=${v}`],
+  ],
+  Email: [
+    ['HaveIBeenPwned',v => `https://haveibeenpwned.com/account/${encodeURIComponent(v)}`],
+    ['Hunter.io',     v => `https://hunter.io/search/${v.split('@')[1] || v}`],
+    ['VirusTotal',    v => `https://www.virustotal.com/gui/search/${encodeURIComponent(v)}`],
+  ],
+  Unknown: [],
+};
+
+const BADGE_CLASS = {
+  IPv4: 'badge-ipv4', IPv6: 'badge-ipv6', Domain: 'badge-domain', URL: 'badge-url',
+  MD5: 'badge-md5', 'SHA-1': 'badge-sha1', 'SHA-256': 'badge-sha256', 'SHA-512': 'badge-sha512',
+  Email: 'badge-email', Unknown: 'badge-unknown',
+};
+
+function esc(s) { return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+
+function truncate(s, n) { return s.length > n ? s.slice(0, n) + '…' : s; }
+
+function analyze() {
+  const raw = document.getElementById('ioc-input').value;
+  const lines = raw.split('\n').map(l => l.trim()).filter(l => l && !l.startsWith('#'));
+
+  if (!lines.length) {
+    document.getElementById('results').innerHTML = '<div class="empty-state">Paste some indicators above, then click Analyze.</div>';
+    document.getElementById('stat').textContent = '';
+    return;
+  }
+
+  const parsed = lines.map(line => {
+    const { type, value } = detectType(line);
+    const wasDefanged = refang(line) !== line.trim();
+    return { raw: line, type, value, wasDefanged };
+  });
+
+  document.getElementById('stat').textContent = parsed.length + ' indicator' + (parsed.length !== 1 ? 's' : '');
+
+  const html = parsed.map((ioc, i) => {
+    const platforms = PLATFORMS[ioc.type] || [];
+    const platLinks = platforms.map(([name, urlFn]) => {
+      const url = urlFn(ioc.value);
+      return `<a href="${esc(url)}" class="plat-btn" target="_blank" rel="noopener">${esc(name)} ↗</a>`;
+    }).join('');
+    const openAllBtn = platforms.length > 1
+      ? `<button class="open-all" data-idx="${i}">Open all ↗</button>`
+      : '';
+    const defangNote = ioc.wasDefanged ? '<span class="defanged-note">re-fanged</span>' : '';
+    const displayVal = esc(truncate(ioc.value, 80));
+    const badgeClass = BADGE_CLASS[ioc.type] || 'badge-unknown';
+
+    return `<div class="ioc-card">
+      <div class="ioc-card-head">
+        <span class="type-badge ${badgeClass}">${esc(ioc.type)}</span>
+        <span class="ioc-val">${displayVal}</span>
+        ${defangNote}
+      </div>
+      <div class="ioc-card-body">
+        ${platLinks || '<span style="font-size:12px;color:var(--ink-4)">No platforms configured for this type.</span>'}
+        ${openAllBtn}
+      </div>
+    </div>`;
+  }).join('');
+
+  document.getElementById('results').innerHTML = html;
+
+  // Store parsed for open-all handlers
+  document.querySelectorAll('.open-all').forEach(btn => {
+    btn.addEventListener('click', function() {
+      const idx = +this.dataset.idx;
+      const ioc = parsed[idx];
+      (PLATFORMS[ioc.type] || []).forEach(([, urlFn]) => {
+        window.open(urlFn(ioc.value), '_blank', 'noopener');
+      });
+    });
+  });
+}
+
+document.getElementById('analyze-btn').addEventListener('click', analyze);
+document.getElementById('ioc-input').addEventListener('keydown', e => {
+  if (e.key === 'Enter' && (e.ctrlKey || e.metaKey)) analyze();
+});
+document.getElementById('clear-btn').addEventListener('click', () => {
+  document.getElementById('ioc-input').value = '';
+  document.getElementById('results').innerHTML = '';
+  document.getElementById('stat').textContent = '';
+});
+</script>
+</body>
+</html>
