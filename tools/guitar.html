@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Guitar Notes Trainer — Tools</title>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg: #FAF9F5;
+  --surface: #F4F2EC;
+  --border: #E4E0D6;
+  --ink: #18181B;
+  --ink-2: #3F3F46;
+  --ink-4: #A1A1AA;
+  --accent: #B4541A;
+  --accent-hover: #933F10;
+  --font: -apple-system, 'Inter', BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --mono: 'JetBrains Mono', 'Fira Code', monospace;
+  --r: 8px;
+  --wood-hi:  #CA9560;
+  --wood-lo:  #9C6B38;
+  --fret-wire: #7A6040;
+  --nut:       #1A0E06;
+  --string-col: #C8B89C;
+  --inlay:    rgba(255,255,255,0.17);
+}
+
+body {
+  font-family: var(--font);
+  background: var(--bg);
+  color: var(--ink);
+  line-height: 1.6;
+  padding: 2rem 1rem 4rem;
+  -webkit-font-smoothing: antialiased;
+}
+
+.container { max-width: 900px; margin: 0 auto; }
+
+.back { font-size: 13px; color: var(--ink-4); text-decoration: none; display: inline-block; margin-bottom: 2rem; }
+.back:hover { color: var(--accent); }
+
+h1 { font-size: 1.75rem; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 0.3rem; }
+.subtitle { font-size: 14px; color: var(--ink-2); margin-bottom: 1.5rem; }
+
+/* ── TABS ───────────────────────────────────────── */
+.tabs { display: flex; gap: 3px; background: white; border: 1px solid var(--border); border-radius: var(--r); padding: 3px; width: fit-content; margin-bottom: 1.5rem; }
+.tab { padding: 5px 22px; font-size: 13px; font-weight: 500; border: none; border-radius: 6px; cursor: pointer; background: none; color: var(--ink-2); font-family: var(--font); transition: 0.15s; }
+.tab.active { background: var(--accent); color: white; font-weight: 600; }
+
+/* ── LEARN CONTROLS ─────────────────────────────── */
+.learn-bar { display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 1rem; }
+.ctrl-btn { font-size: 12px; padding: 5px 12px; border: 1px solid var(--border); border-radius: 5px; background: white; color: var(--ink-2); cursor: pointer; font-family: var(--font); transition: 0.15s; }
+.ctrl-btn:hover { border-color: var(--accent); color: var(--accent); }
+.legend { display: flex; gap: 0.75rem; margin-left: auto; align-items: center; flex-wrap: wrap; }
+.leg { display: flex; align-items: center; gap: 0.35rem; font-size: 11px; color: var(--ink-4); }
+.leg-dot { width: 10px; height: 10px; border-radius: 50%; }
+.leg-nat { background: var(--accent); }
+.leg-shp { background: #3A1E08; border: 1px solid #888; }
+
+/* ── QUIZ PANEL ─────────────────────────────────── */
+.quiz-header { display: flex; gap: 1rem; margin-bottom: 1rem; align-items: stretch; flex-wrap: wrap; }
+
+.target-box { background: white; border: 1px solid var(--border); border-radius: var(--r); padding: 1rem 1.5rem; text-align: center; min-width: 110px; flex-shrink: 0; }
+.target-lbl { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--ink-4); margin-bottom: 6px; }
+.target-note { font-size: 2.75rem; font-weight: 800; font-family: var(--mono); color: var(--accent); line-height: 1; letter-spacing: -0.02em; }
+.target-note.idle { color: var(--ink-4); font-size: 1.3rem; font-weight: 400; padding: 0.35rem 0; }
+
+.stats-grid { flex: 1; min-width: 240px; display: grid; grid-template-columns: repeat(4, 1fr); border: 1px solid var(--border); border-radius: var(--r); overflow: hidden; gap: 1px; background: var(--border); }
+.stat-cell { background: white; padding: 0.7rem 0.5rem; text-align: center; }
+.stat-val { font-size: 1.6rem; font-weight: 700; font-family: var(--mono); line-height: 1.1; color: var(--ink); }
+.stat-val.ca { color: var(--accent); }
+.stat-val.cg { color: #16a34a; }
+.stat-lbl { font-size: 9px; text-transform: uppercase; letter-spacing: 0.07em; color: var(--ink-4); margin-top: 2px; }
+
+.quiz-actions { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1rem; flex-wrap: wrap; }
+.btn-start { padding: 0.6rem 1.4rem; font-size: 13px; font-weight: 700; border-radius: var(--r); border: none; cursor: pointer; font-family: var(--font); transition: 0.15s; background: var(--accent); color: white; }
+.btn-start:hover { background: var(--accent-hover); }
+.btn-start.stop { background: #dc2626; }
+.btn-start.stop:hover { background: #b91c1c; }
+.quiz-hint { font-size: 12px; color: var(--ink-4); }
+
+.result-panel { display: none; background: white; border: 1px solid var(--border); border-radius: var(--r); padding: 2rem; text-align: center; margin-bottom: 1rem; }
+.result-panel.on { display: block; }
+.result-h { font-size: 1.1rem; font-weight: 700; margin-bottom: 0.4rem; }
+.result-score { font-size: 3.5rem; font-weight: 800; font-family: var(--mono); color: var(--accent); line-height: 1; margin-bottom: 0.4rem; }
+.result-sub { font-size: 13px; color: var(--ink-2); margin-bottom: 1.25rem; line-height: 1.7; }
+.result-best { color: #16a34a; font-weight: 600; }
+
+.panel.hidden { display: none; }
+
+/* ── FRETBOARD ──────────────────────────────────── */
+.fb-wrap { margin-bottom: 0.75rem; }
+.fb-scroll {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  background: linear-gradient(155deg, var(--wood-hi) 0%, var(--wood-lo) 100%);
+  border-radius: var(--r);
+  padding: 0.75rem 0.75rem 0;
+  box-shadow: 0 4px 24px rgba(50,25,8,0.22), inset 0 1px 0 rgba(255,255,255,0.12);
+}
+
+.fb-grid {
+  display: grid;
+  grid-template-columns: 24px 44px repeat(12, 52px);
+  /* 14 columns: label | fret-0 | fret-1..12 */
+}
+
+/* Fret number row */
+.fn-cell { font-size: 9px; font-family: var(--mono); color: rgba(255,255,255,0.38); text-align: center; padding-bottom: 5px; user-select: none; }
+
+/* String labels */
+.str-lbl { display: flex; align-items: center; justify-content: flex-end; padding-right: 7px; font-size: 12px; font-weight: 700; color: rgba(255,255,255,0.72); font-family: var(--mono); height: 42px; user-select: none; }
+
+/* Fret cells */
+.fc { position: relative; height: 42px; cursor: pointer; transition: background 0.1s; }
+.fc:hover { background: rgba(255,255,255,0.07); }
+
+/* Nut at left of fret-1 */
+.fc.fret-1 { border-left: 5px solid var(--nut); }
+
+/* Fret wires at fret-2 through fret-12 */
+.fc.fret-2,.fc.fret-3,.fc.fret-4,.fc.fret-5,.fc.fret-6,
+.fc.fret-7,.fc.fret-8,.fc.fret-9,.fc.fret-10,.fc.fret-11,.fc.fret-12 {
+  border-left: 1.5px solid var(--fret-wire);
+}
+
+/* String lines — thickness varies per string */
+.fc::after {
+  content: ''; position: absolute; top: 50%; left: 0; right: 0;
+  transform: translateY(-50%); background: var(--string-col); pointer-events: none; z-index: 0;
+}
+.fc.s0::after { height: 1px; }
+.fc.s1::after { height: 1.5px; }
+.fc.s2::after { height: 2px; }
+.fc.s3::after { height: 2.5px; }
+.fc.s4::after { height: 3px; }
+.fc.s5::after { height: 3.5px; }
+
+/* Note dots */
+.ndot {
+  position: absolute; top: 50%; left: 50%;
+  transform: translate(-50%, -50%) scale(0);
+  width: 26px; height: 26px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 9.5px; font-weight: 700; font-family: var(--mono);
+  z-index: 2; pointer-events: none; user-select: none;
+  opacity: 0; transition: transform 0.12s ease, opacity 0.1s;
+}
+
+/* Hover: show ghost dot */
+.fc:hover .ndot {
+  transform: translate(-50%, -50%) scale(1);
+  opacity: 1;
+  background: rgba(255,255,255,0.2);
+  color: white;
+}
+
+/* Pinned — sharp (lower specificity, declared first) */
+.fc.pinned .ndot {
+  transform: translate(-50%, -50%) scale(1);
+  opacity: 1;
+  background: #2E1408;
+  color: rgba(255,255,255,0.82);
+  border: 1.5px solid rgba(255,255,255,0.22);
+}
+
+/* Pinned — natural (higher specificity, overrides sharp rule) */
+.fc.pinned.natural .ndot {
+  background: var(--accent);
+  color: white;
+  border: none;
+}
+
+/* Quiz feedback — !important to beat pinned specificity */
+.fc.correct .ndot {
+  transform: translate(-50%, -50%) scale(1) !important;
+  opacity: 1 !important;
+  background: #16a34a !important;
+  color: white !important;
+  border: none !important;
+  animation: pop 0.28s ease;
+}
+.fc.wrong .ndot {
+  transform: translate(-50%, -50%) scale(1) !important;
+  opacity: 1 !important;
+  background: #dc2626 !important;
+  color: white !important;
+  border: none !important;
+  animation: shk 0.28s ease;
+}
+
+@keyframes pop {
+  0%   { transform: translate(-50%,-50%) scale(1); }
+  45%  { transform: translate(-50%,-50%) scale(1.42); }
+  100% { transform: translate(-50%,-50%) scale(1); }
+}
+@keyframes shk {
+  0%,100% { transform: translate(-50%,-50%) translateX(0); }
+  25%      { transform: translate(-50%,-50%) translateX(-5px); }
+  75%      { transform: translate(-50%,-50%) translateX(5px); }
+}
+
+/* ── TOOLTIP ─────────────────────────────────────── */
+.tip {
+  position: fixed; display: none; z-index: 300; pointer-events: none;
+  background: var(--ink); color: white; font-size: 11px; font-family: var(--mono);
+  padding: 4px 9px; border-radius: 4px; white-space: nowrap;
+  transform: translate(-50%, calc(-100% - 10px));
+}
+
+.fb-note { font-size: 12px; color: var(--ink-4); margin-top: 0.5rem; }
+
+footer { margin-top: 3rem; font-size: 12px; color: var(--ink-4); text-align: center; }
+footer a { color: var(--accent); text-decoration: none; }
+</style>
+</head>
+<body>
+<div class="container">
+  <a href="index.html" class="back">← Back to tools</a>
+  <h1>Guitar Notes Trainer</h1>
+  <p class="subtitle">Learn every note on the fretboard. Standard tuning (EADGBE) · Frets 0–12 · Local high score.</p>
+
+  <div class="tabs">
+    <button class="tab active" id="tab-learn">Learn</button>
+    <button class="tab" id="tab-quiz">Quiz</button>
+  </div>
+
+  <!-- LEARN PANEL -->
+  <div class="panel" id="panel-learn">
+    <div class="learn-bar">
+      <button class="ctrl-btn" id="btn-all">Show all notes</button>
+      <button class="ctrl-btn" id="btn-nat">Naturals only</button>
+      <button class="ctrl-btn" id="btn-clr">Clear</button>
+      <div class="legend">
+        <div class="leg"><div class="leg-dot leg-nat"></div>Natural</div>
+        <div class="leg"><div class="leg-dot leg-shp"></div>Sharp / flat</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- QUIZ PANEL -->
+  <div class="panel hidden" id="panel-quiz">
+    <div class="quiz-header">
+      <div class="target-box">
+        <div class="target-lbl">Find this note</div>
+        <div class="target-note idle" id="t-note">—</div>
+      </div>
+      <div class="stats-grid">
+        <div class="stat-cell">
+          <div class="stat-val ca" id="s-time">60</div>
+          <div class="stat-lbl">Seconds</div>
+        </div>
+        <div class="stat-cell">
+          <div class="stat-val" id="s-score">0</div>
+          <div class="stat-lbl">Score</div>
+        </div>
+        <div class="stat-cell">
+          <div class="stat-val cg" id="s-streak">0</div>
+          <div class="stat-lbl">Streak</div>
+        </div>
+        <div class="stat-cell">
+          <div class="stat-val" id="s-best">0</div>
+          <div class="stat-lbl">Best</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="quiz-actions">
+      <button class="btn-start" id="btn-start">Start 60s Round</button>
+      <span class="quiz-hint">Click any fret position that shows the target note.</span>
+    </div>
+
+    <div class="result-panel" id="result-panel">
+      <div class="result-h" id="r-title">Round complete</div>
+      <div class="result-score" id="r-score">0</div>
+      <div class="result-sub" id="r-sub"></div>
+      <button class="btn-start" id="btn-again">Play again</button>
+    </div>
+  </div>
+
+  <!-- FRETBOARD (shared between modes) -->
+  <div class="fb-wrap">
+    <div class="fb-scroll">
+      <div class="fb-grid" id="fb"></div>
+    </div>
+  </div>
+  <div class="fb-note" id="fb-note">Hover a fret to see the note name · Click to pin it</div>
+</div>
+
+<div class="tip" id="tip"></div>
+
+<footer><a href="../index.html">gourab026.github.io</a></footer>
+
+<script>
+const CHROMATIC   = ['C','C#','D','D#','E','F','F#','G','G#','A','A#','B'];
+const NATURALS    = new Set(['C','D','E','F','G','A','B']);
+const OPEN        = ['E','B','G','D','A','E']; // str 0=high e … 5=low E
+const STR_NAMES   = ['e','B','G','D','A','E'];
+const FRETS       = 13;  // 0–12
+const INLAY_SINGLE = new Set([3,5,7,9]);
+const QUIZ_SECS   = 60;
+const LS_KEY      = 'guitar-trainer-best';
+
+function noteAt(s, f) {
+  return CHROMATIC[(CHROMATIC.indexOf(OPEN[s]) + f) % 12];
+}
+
+// ── BUILD FRETBOARD ──────────────────────────────────
+const fb    = document.getElementById('fb');
+const cells = []; // cells[str][fret]
+
+// Row 1 — fret numbers
+const fnPad = document.createElement('div');
+fnPad.className = 'fn-cell';
+fb.appendChild(fnPad);
+for (let f = 0; f < FRETS; f++) {
+  const el = document.createElement('div');
+  el.className = 'fn-cell';
+  el.textContent = f === 0 ? '' : String(f);
+  fb.appendChild(el);
+}
+
+// Rows 2–7 — strings
+for (let s = 0; s < 6; s++) {
+  cells[s] = [];
+  // Label
+  const lbl = document.createElement('div');
+  lbl.className = 'str-lbl';
+  lbl.textContent = STR_NAMES[s];
+  fb.appendChild(lbl);
+  // Cells
+  for (let f = 0; f < FRETS; f++) {
+    const note = noteAt(s, f);
+    const nat  = NATURALS.has(note);
+    const cell = document.createElement('div');
+    cell.className = `fc s${s} fret-${f} ${nat ? 'natural' : 'sharp'}`;
+    cell.dataset.s    = s;
+    cell.dataset.f    = f;
+    cell.dataset.note = note;
+    const dot = document.createElement('div');
+    dot.className = 'ndot';
+    dot.textContent = note;
+    cell.appendChild(dot);
+    cells[s][f] = cell;
+    fb.appendChild(cell);
+  }
+}
+
+// Row 8 — inlay dots
+const inlay = document.createElement('div');
+Object.assign(inlay.style, {
+  gridColumn: '1 / -1',
+  display: 'grid',
+  gridTemplateColumns: '24px 44px repeat(12, 52px)',
+  height: '22px',
+  padding: '4px 0 6px',
+});
+// empty label + 13 columns
+fb.appendChild(document.createElement('div')); // placeholder so inlay spans correctly
+// Actually append inlay directly:
+fb.removeChild(fb.lastChild);
+inlay.appendChild(document.createElement('div')); // label col
+for (let f = 0; f < FRETS; f++) {
+  const cell = document.createElement('div');
+  Object.assign(cell.style, { display:'flex', alignItems:'center', justifyContent:'center' });
+  if (f === 12) {
+    const pair = document.createElement('div');
+    Object.assign(pair.style, { display:'flex', gap:'8px' });
+    [0,1].forEach(() => {
+      const d = document.createElement('div');
+      Object.assign(d.style, { width:'6px', height:'6px', borderRadius:'50%', background:'rgba(255,255,255,0.17)' });
+      pair.appendChild(d);
+    });
+    cell.appendChild(pair);
+  } else if (INLAY_SINGLE.has(f)) {
+    const d = document.createElement('div');
+    Object.assign(d.style, { width:'8px', height:'8px', borderRadius:'50%', background:'rgba(255,255,255,0.17)' });
+    cell.appendChild(d);
+  }
+  inlay.appendChild(cell);
+}
+fb.appendChild(inlay);
+
+// ── TOOLTIP ──────────────────────────────────────────
+const tip = document.getElementById('tip');
+fb.addEventListener('mousemove', e => {
+  const fc = e.target.closest('.fc');
+  if (!fc) { tip.style.display = 'none'; return; }
+  tip.textContent = `${fc.dataset.note}  ·  String ${STR_NAMES[+fc.dataset.s]}  ·  Fret ${fc.dataset.f}`;
+  tip.style.display = 'block';
+  tip.style.left = e.clientX + 'px';
+  tip.style.top  = e.clientY + 'px';
+});
+fb.addEventListener('mouseleave', () => { tip.style.display = 'none'; });
+
+// ── LEARN MODE ────────────────────────────────────────
+let currentMode = 'learn';
+const pinned = new Set();
+const allCells = cells.flat();
+
+function clearAll() {
+  pinned.clear();
+  allCells.forEach(c => c.classList.remove('pinned','correct','wrong'));
+}
+function setPin(cell, on) {
+  cell.classList.toggle('pinned', on);
+  on ? pinned.add(cell) : pinned.delete(cell);
+}
+
+document.getElementById('btn-all').addEventListener('click', () => {
+  clearAll();
+  allCells.forEach(c => setPin(c, true));
+});
+document.getElementById('btn-nat').addEventListener('click', () => {
+  clearAll();
+  allCells.filter(c => NATURALS.has(c.dataset.note)).forEach(c => setPin(c, true));
+});
+document.getElementById('btn-clr').addEventListener('click', clearAll);
+
+fb.addEventListener('click', e => {
+  if (currentMode !== 'learn') return;
+  const fc = e.target.closest('.fc');
+  if (!fc) return;
+  setPin(fc, !pinned.has(fc));
+});
+
+// ── MODE SWITCH ───────────────────────────────────────
+function switchMode(m) {
+  currentMode = m;
+  document.getElementById('tab-learn').classList.toggle('active', m === 'learn');
+  document.getElementById('tab-quiz').classList.toggle('active',  m === 'quiz');
+  document.getElementById('panel-learn').classList.toggle('hidden', m !== 'learn');
+  document.getElementById('panel-quiz').classList.toggle('hidden',  m !== 'quiz');
+  document.getElementById('fb-note').textContent = m === 'learn'
+    ? 'Hover a fret to see the note name · Click to pin it'
+    : 'Click the correct fret position for the target note';
+  stopQuiz(false);
+  clearAll();
+  if (m === 'quiz') loadBest();
+}
+document.getElementById('tab-learn').addEventListener('click', () => switchMode('learn'));
+document.getElementById('tab-quiz').addEventListener('click',  () => switchMode('quiz'));
+
+// ── QUIZ MODE ─────────────────────────────────────────
+let running = false, qTimer = null;
+let timeLeft, score, streak, maxStreak, totalTried, locked, targetNote;
+
+function loadBest() {
+  document.getElementById('s-best').textContent = localStorage.getItem(LS_KEY) || '0';
+}
+function saveBest(s) {
+  const prev = parseInt(localStorage.getItem(LS_KEY) || '0');
+  if (s > prev) localStorage.setItem(LS_KEY, String(s));
+}
+
+function updateStats() {
+  document.getElementById('s-time').textContent   = timeLeft;
+  document.getElementById('s-score').textContent  = score;
+  document.getElementById('s-streak').textContent = streak;
+}
+
+function clearFeedback() {
+  allCells.forEach(c => c.classList.remove('correct','wrong'));
+}
+
+function nextNote() {
+  clearFeedback();
+  targetNote = CHROMATIC[Math.floor(Math.random() * 12)];
+  const el = document.getElementById('t-note');
+  el.textContent = targetNote;
+  el.className = 'target-note';
+  locked = false;
+}
+
+function startQuiz() {
+  running = true;
+  score = streak = maxStreak = totalTried = 0;
+  timeLeft = QUIZ_SECS;
+  locked = false;
+  clearAll();
+  document.getElementById('result-panel').classList.remove('on');
+  document.getElementById('btn-start').textContent = 'Stop';
+  document.getElementById('btn-start').classList.add('stop');
+  updateStats();
+  nextNote();
+  qTimer = setInterval(() => {
+    timeLeft--;
+    document.getElementById('s-time').textContent = timeLeft;
+    if (timeLeft <= 0) stopQuiz(true);
+  }, 1000);
+}
+
+function stopQuiz(showResult) {
+  if (qTimer) { clearInterval(qTimer); qTimer = null; }
+  running = false; locked = false;
+  document.getElementById('btn-start').textContent = 'Start 60s Round';
+  document.getElementById('btn-start').classList.remove('stop');
+  const tn = document.getElementById('t-note');
+  tn.textContent = '—'; tn.className = 'target-note idle';
+  document.getElementById('s-time').textContent = QUIZ_SECS;
+  clearFeedback();
+  if (!showResult) return;
+
+  saveBest(score);
+  loadBest();
+  const best    = parseInt(localStorage.getItem(LS_KEY) || '0');
+  const newBest = score > 0 && score >= best;
+  const acc     = totalTried ? Math.round(score / totalTried * 100) : 0;
+
+  document.getElementById('r-title').textContent = newBest ? '🎸 New best!' : 'Round complete';
+  document.getElementById('r-score').textContent = score;
+  document.getElementById('r-sub').innerHTML     = totalTried
+    ? `${acc}% accuracy &nbsp;·&nbsp; ${totalTried} attempt${totalTried !== 1 ? 's' : ''} &nbsp;·&nbsp; best streak <strong>${maxStreak}</strong>`
+    : 'No notes clicked — try hitting some frets next round!';
+  document.getElementById('result-panel').classList.add('on');
+}
+
+fb.addEventListener('click', e => {
+  if (currentMode !== 'quiz' || !running || locked) return;
+  const fc = e.target.closest('.fc');
+  if (!fc) return;
+  totalTried++;
+  if (fc.dataset.note === targetNote) {
+    score++;
+    streak++;
+    if (streak > maxStreak) maxStreak = streak;
+    fc.classList.add('correct');
+    locked = true;
+    updateStats();
+    setTimeout(nextNote, 380);
+  } else {
+    maxStreak = Math.max(maxStreak, streak);
+    streak = 0;
+    fc.classList.add('wrong');
+    locked = true;
+    updateStats();
+    setTimeout(() => { fc.classList.remove('wrong'); locked = false; }, 520);
+  }
+});
+
+document.getElementById('btn-start').addEventListener('click', () => {
+  if (running) stopQuiz(false); else startQuiz();
+});
+document.getElementById('btn-again').addEventListener('click', () => {
+  document.getElementById('result-panel').classList.remove('on');
+  startQuiz();
+});
+
+loadBest();
+</script>
+</body>
+</html>
