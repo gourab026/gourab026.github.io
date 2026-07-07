@@ -6,6 +6,8 @@ ADD Gemfile.lock /tmp/
 RUN bundle install
 
 FROM jekyll/jekyll
+RUN useradd -m jekyll
+USER jekyll
 
 VOLUME /src
 EXPOSE 4000
